@@ -1,0 +1,22 @@
+@import "../../../vars";
+
+.navbar {
+    display: grid;
+    grid-template-columns: 0.8fr 2.5fr 1.5fr;
+    height: 60px;
+    align-items: center;
+
+    .action_section {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .brand {
+        @include center_direction("row");
+        width: 20px;
+
+        span {
+            margin-left: 5px;
+        }
+    }
+}

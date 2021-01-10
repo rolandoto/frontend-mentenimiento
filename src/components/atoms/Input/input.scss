@@ -1,0 +1,62 @@
+.input_item {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 13px 0;
+
+    .error {
+        position: absolute;
+        bottom: -20px;
+        color: tomato;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px 5px;
+        height: 20px;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #c4c4c4;
+    }
+
+    .errorInput {
+        border: 1px solid tomato;
+        color: tomato;
+    }
+
+    .animated_text {
+        position: absolute;
+        left: 5px;
+        font-size: 1rem;
+        background-color: white;
+        padding: 0 6px;
+        font-size: 0.9rem;
+        color: #949494;
+    }
+
+    .error_text {
+        color: tomato;
+    }
+
+    .animated {
+        animation: set_animation 0.1s linear;
+        transform: translateY(-19px);
+        background-color: white;
+        font-size: 0.8rem;
+    }
+
+    @keyframes set_animation {
+        from {
+            transform: translateY(0);
+            background-color: transparent;
+        }
+        to {
+            transform: translateY(-19px);
+        }
+    }
+}
+
+.error_margin {
+    margin-bottom: 30px;
+}

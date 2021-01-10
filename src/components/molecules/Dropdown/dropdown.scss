@@ -1,0 +1,15 @@
+@import "../../../vars";
+
+.trigger_dropdown {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    svg {
+        fill: $fontColor;
+    }
+
+    div {
+        margin: 0 5px;
+    }
+}

@@ -1,0 +1,29 @@
+$mainBackground: #f4f6fa;
+$outherColor: #e5e9f0;
+$fontColor: #83889c;
+$buttonColor: #5b83d7;
+$fontColorSecondary: #dce1e7;
+
+@mixin center_elements {
+    display: flex;
+}
+
+@mixin center_vertical {
+    @include center_elements();
+    align-items: center;
+}
+
+@mixin center_horizontal {
+    @include center_elements();
+    justify-content: center;
+}
+
+@mixin center_direction($dest) {
+    @if $dest == "row" {
+        flex-direction: row;
+        @include center_vertical();
+    } @else {
+        flex-direction: column;
+        @include center_horizontal();
+    }
+}

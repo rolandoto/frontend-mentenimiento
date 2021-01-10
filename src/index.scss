@@ -1,0 +1,21 @@
+@import 'vars' ,'reset';
+
+body {
+    min-height: 100vh;   
+    background-color: $mainBackground;
+}
+
+.loading_screen {
+    background-color: tomato;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+}
