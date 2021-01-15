@@ -35,6 +35,7 @@ export function LoginForm() {
                 placeholder="Email"
                 type="email"
                 error={errors}
+                height={50}
                 min={5}
                 animated
                 required
@@ -45,11 +46,12 @@ export function LoginForm() {
                 type="password"
                 error={errors}
                 min={5}
+                height={50}
                 max={10}
                 animated
                 required
             />
-            <Button text="Login" />
+            <Button text="Login" variant="secondary btn-big" style={{height: 50}} />
             {authState.status === false && authState.error === "general" && (
                 <div className="error_message">
                     <span>{authState.message}</span>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Text } from "../../atoms";
 import { ArrowDropDown } from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import { LoginActions } from "../../../@actions";
 import "./dropdown.scss";
 
 export const Dropdown = ({
@@ -11,6 +13,7 @@ export const Dropdown = ({
 }) => {
     const [isActive, setIsActive] = useState(false);
     const user = useSelector((state) => state.AuthReducer);
+    const dispatch = useDispatch();
 
     const Parent = ({ children, className = "" }) => {
         return click ? (
@@ -18,32 +21,39 @@ export const Dropdown = ({
                 {children}
             </div>
         ) : (
-            <div
-                onMouseEnter={() => setIsActive(!isActive)}
-                onMouseLeave={() => setIsActive(!isActive)}
-                className={className}
-            >
+            <div className={className + " custom_hover_trigger"}>
                 {children}
             </div>
         );
     };
 
-    return (
-        <div>
-            <Parent className="trigger_dropdown">
-                {image && <Avatar size={30} />}
-                {username && user.status && (
-                    <Text
-                        type="span"
-                        weight="500"
-                        color="#83889c"
-                        text={user.user.name}
-                    />
-                )}
-                <ArrowDropDown />
-            </Parent>
+    const logout = (_) => {
+        dispatch(LoginActions.logout());
+    };
 
-            {isActive && <div>list</div>}
-        </div>
+    return (
+        <Parent className="trigger_dropdown">
+            {image && <Avatar size={30} />}
+            {username && user.status && (
+                <Text
+                    type="span"
+                    weight="600"
+                    color="#83889c"
+                    size={14}
+                    text={user.user.name}
+                />
+            )}
+            <ArrowDropDown />
+
+            <ul className="dropdown">
+                <li>
+                    <Link to="/profile">Perfil</Link>
+                </li>
+                <div className="rule"></div>
+                <li onClick={() => logout()}>
+                    <div>Cerrar sesión</div>
+                </li>
+            </ul>
+        </Parent>
     );
 };

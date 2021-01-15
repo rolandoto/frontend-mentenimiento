@@ -1,0 +1,31 @@
+@import "../../../vars";
+
+.login_template {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.login_container_desing {
+    @include center_direction("colum");
+    background-color: #fff;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    min-height: 500px;
+
+    form {
+        width: 100%;
+    }
+}
+
+.responsive_image_login {
+    width: 90%;
+    height: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .w100OnMobile {
+        width: 100%;
+    }
+}

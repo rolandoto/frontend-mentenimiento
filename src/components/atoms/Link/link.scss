@@ -1,0 +1,24 @@
+@import "../../../vars";
+
+.custom_nav_li {
+    margin: 10px 0;
+
+    a {
+        color: $fontColor;
+        @include center_vertical();
+        text-decoration: none;
+        padding: 5px 0;
+        
+        svg {
+            margin-right: 8px;
+        }
+    }
+
+    a.active {
+        color: $secondary;
+
+        span {
+            color: $secondary;
+        }
+    }
+}

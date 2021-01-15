@@ -5,7 +5,7 @@ import { Router } from "react-router-dom";
 import { history, store } from "./helpers";
 import { Provider } from "react-redux";
 import { App } from "./App";
-import 'typeface-roboto';
+import 'typeface-poppins';
 
 
 ReactDOM.render(

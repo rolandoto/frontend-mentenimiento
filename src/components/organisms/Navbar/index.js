@@ -18,11 +18,13 @@ export const Navbar = (_) => {
                         text="Siesa"
                         weight="bold"
                         color="#83889c"
+                        size={13}
+                        colored
                     />
                 </div>
                 <Search />
                 <div className="action_section">
-                    <Dropdown image username click />
+                    <Dropdown image username  />
                 </div>
             </div>
         </nav>

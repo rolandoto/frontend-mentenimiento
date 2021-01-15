@@ -1,5 +1,19 @@
+@import "../../../vars";
+
 .button {
-    width: 100%;
-    padding: 8px 5px;
+    @include absolute_center();
+    padding: 8px 15px;
     cursor: pointer;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+}
+
+.btn-big {
+    width: 100%;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: $secondary;
 }

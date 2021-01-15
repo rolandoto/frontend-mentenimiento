@@ -5,6 +5,7 @@ import { cookieHelper, history } from "../../helpers";
 export const LoginActions = {
     login,
     authenticate,
+    logout,
 };
 
 function login(user) {
@@ -33,6 +34,20 @@ function login(user) {
     }
     function failure(response) {
         return { type: LoginTypes.LOGIN_FAILURE, response };
+    }
+}
+
+function logout() {
+    return (dispatch) => {
+        cookieHelper.deleteCookie("user");
+        if (!cookieHelper.getCookie("user")) {
+            dispatch(logout());
+            history.push("/");
+        }
+    };
+
+    function logout() {
+        return { type: LoginTypes.USER_LOGOUT };
     }
 }
 

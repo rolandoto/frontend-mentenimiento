@@ -15,5 +15,5 @@ function getCookie(name) {
 }
 
 function deleteCookie(name) {
-    cookie.remove(name);
+    cookie.remove(name, { path: "/" });
 }

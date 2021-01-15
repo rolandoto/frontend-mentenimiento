@@ -9,6 +9,7 @@ export const Input = ({
     error,
     min = 1,
     max = min + 1,
+    height,
     ...rest
 }) => {
     const textRef = useRef();
@@ -17,8 +18,6 @@ export const Input = ({
     const [isValid, setIsValid] = useState(false);
 
     const [inputValue, setInputValue] = useState("");
-
-   
 
     const evaluateInput = (_) => {
         if (textRef.current) {
@@ -94,10 +93,13 @@ export const Input = ({
         } else {
             setErrors(false);
         }
-    }, [error , identifier]);
+    }, [error, identifier]);
 
     return (
-        <div className={errors ? "input_item error_margin" : "input_item"}>
+        <div
+            className={errors ? "input_item error_margin" : "input_item"}
+            style={{ height: height }}
+        >
             {animated && (
                 <span
                     ref={textRef}

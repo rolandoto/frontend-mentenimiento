@@ -9,15 +9,19 @@
         position: absolute;
         bottom: -20px;
         color: tomato;
+
+        @media screen and (max-width: 1000px){
+            bottom: -40px;
+        }
     }
 
     input {
         width: 100%;
-        padding: 8px 5px;
-        height: 20px;
+        height: 100%;
+        padding: 8px 10px;
         outline: none;
         border-radius: 5px;
-        border: 1px solid #c4c4c4;
+        border: 1px solid #e2e2e2;
     }
 
     .errorInput {
@@ -59,4 +63,8 @@
 
 .error_margin {
     margin-bottom: 30px;
+
+    @media screen and (max-width: 1000px){
+        margin-bottom: 60px;
+    }
 }

@@ -1,12 +1,12 @@
-@import 'vars' ,'reset';
+@import "vars", "reset";
 
 body {
-    min-height: 100vh;   
+    min-height: 100vh;
     background-color: $mainBackground;
 }
 
 .loading_screen {
-    background-color: tomato;
+    background-color: $secondary;
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -18,4 +18,97 @@ body {
 .container {
     max-width: 80%;
     margin: 0 auto;
+}
+
+.main_container {
+    background-color: #fff;
+    box-shadow: $shadow;
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px
+    
+}
+
+.rows {
+    @include center_elements();
+    justify-content: space-between;
+}
+
+.rows_evely {
+    @include center_elements();
+    justify-content: space-evenly;
+}
+
+.separator_top {
+    width: 100%;
+    height: 20px;
+}
+
+.col3 {
+    width: 20%;
+}
+
+.col4 {
+    width: 28%;
+}
+
+.col5 {
+    width: 40%;
+}
+
+.col6 {
+    width: 49%;
+}
+
+.col8 {
+    width: 70%;
+}
+
+.col9 {
+    width: 78%;
+}
+
+.position_relative {
+    position: relative;
+}
+
+.center_elements {
+    @include center_horizontal();
+}
+
+@media screen and (max-width: 800px) {
+    .hide_on_mobile {
+        display: none;
+    }
+}
+
+// Mobile
+@media screen and (max-width: 550px) {
+    @mixin w100 {
+        width: 100%;
+    }
+
+    .col3 {
+        @include w100();
+    }
+
+    .col4 {
+        @include w100();
+    }
+
+    .col5 {
+        @include w100();
+    }
+
+    .col6 {
+        @include w100();
+    }
+
+    .col8 {
+        @include w100();
+    }
+
+    .col9 {
+        @include w100();
+    }
 }

@@ -1,6 +1,15 @@
-import { combineReducers } from 'redux';
-import { AuthReducer } from './Login'
+import { combineReducers } from "redux";
+import { AuthReducer } from "./Login";
+import { LoginTypes } from "../@types";
 
-export const rootReducer = combineReducers({
-    AuthReducer
-})
+const rootReducer = combineReducers({
+    AuthReducer,
+});
+
+const evalueReducer = (state, action) =>
+    rootReducer(
+        action.type === LoginTypes.USER_LOGOUT ? undefined : state,
+        action
+    );
+
+export default evalueReducer;

@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { PrivateRoute, cookieHelper } from "./helpers";
 import { LoginActions } from "./@actions";
 import { MainLayout } from "./layouts";
-import { Home, Login } from "./pages";
+import { Home, Login , Environments} from "./pages";
 
 export const App = (_) => {
     const dispatch = useDispatch();
@@ -27,6 +27,7 @@ export const App = (_) => {
                 <Route path="/login" component={Login} />
                 <MainLayout>
                     <PrivateRoute exact path="/" component={Home} />
+                    <PrivateRoute exact path="/environments" component={Environments} />
                 </MainLayout>
             </Switch>
         </>
