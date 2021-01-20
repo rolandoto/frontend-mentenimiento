@@ -1,5 +1,6 @@
 import { EnvironmentTypes } from "../../@types";
 import { environmentService } from "../../@services";
+import { alertActions, modalActions } from "../";
 import { request, callback } from "../";
 
 export const environmentActions = {
@@ -21,21 +22,24 @@ function getEnvironments() {
                     dispatch(
                         callback(
                             EnvironmentTypes.GETENVIRONMENTS_SUCCESS,
-                            response
+                            response.data
                         )
                     );
                 } else {
                     dispatch(
                         callback(
                             EnvironmentTypes.GETENVIRONMENTS_FAILURE,
-                            response
+                            response.data
                         )
                     );
                 }
             })
             .catch((err) => {
                 dispatch(
-                    callback(EnvironmentTypes.GETENVIRONMENTS_FAILURE, err)
+                    callback(
+                        EnvironmentTypes.GETENVIRONMENTS_FAILURE,
+                        err.response.data
+                    )
                 );
             });
     };
@@ -72,32 +76,42 @@ function getEnvironment(_id) {
     };
 }
 
-function createEnvironment(_environment) {
+function createEnvironment(_data) {
     return (dispatch) => {
         dispatch(request(EnvironmentTypes.CREATEENVIRONMENT_REQUEST));
 
         environmentService
-            .createEnvironment(_environment)
+            .createEnvironment(_data)
             .then((response) => {
                 if (response.data.status) {
                     dispatch(
                         callback(
-                            EnvironmentTypes.CREATEENVIRONMENT_SUCCESS,
-                            response
+                            EnvironmentTypes.GETENVIRONMENTS_SUCCESS,
+                            response.data
                         )
+                    );
+                    dispatch(modalActions.closeModal());
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: response.data.message,
+                        })
                     );
                 } else {
                     dispatch(
-                        callback(
-                            EnvironmentTypes.CREATEENVIRONMENT_FAILURE,
-                            response
-                        )
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: response.data.message,
+                        })
                     );
                 }
             })
             .catch((err) => {
                 dispatch(
-                    callback(EnvironmentTypes.CREATEENVIRONMENT_FAILURE, err)
+                    alertActions.showAlert({
+                        type: "failure",
+                        message: err.response.data.message,
+                    })
                 );
             });
     };
@@ -112,23 +126,26 @@ function updateEnvironment(_environment) {
             .then((response) => {
                 if (response.data.status) {
                     dispatch(
-                        callback(
-                            EnvironmentTypes.UPDATEENVIRONMENT_SUCCESS,
-                            response
-                        )
+                        alertActions.showAlert({
+                            type: "success",
+                            message: response.data.message,
+                        })
                     );
                 } else {
                     dispatch(
-                        callback(
-                            EnvironmentTypes.UPDATEENVIRONMENT_FAILURE,
-                            response
-                        )
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: response.data.message,
+                        })
                     );
                 }
             })
             .catch((err) => {
                 dispatch(
-                    callback(EnvironmentTypes.UPDATEENVIRONMENT_FAILURE, err)
+                    alertActions.showAlert({
+                        type: "failure",
+                        message: err.response.data.message,
+                    })
                 );
             });
     };

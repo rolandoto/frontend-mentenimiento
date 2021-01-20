@@ -1,6 +1,6 @@
 import { LoginTypes } from "../../@types";
 import { LoginService } from "../../@services";
-import { cookieHelper, history } from "../../helpers";
+import { cookieHelper, history, socket } from "../../helpers";
 
 export const LoginActions = {
     login,
@@ -17,6 +17,12 @@ function login(user) {
                     cookieHelper.createCookie("user", response.data.token);
                     dispatch(success(response.data));
                     history.push("/");
+                    socket.connect();
+                    sessionStorage.setItem("userID", response.data.user._id);
+                    socket.emit("userConnect", {
+                        _id: response.data.user._id,
+                        _socketID: sessionStorage.getItem("SocketID"),
+                    });
                 } else {
                     dispatch(failure(response.data));
                 }
@@ -37,12 +43,20 @@ function login(user) {
     }
 }
 
-function logout() {
+function logout(_id) {
     return (dispatch) => {
         cookieHelper.deleteCookie("user");
         if (!cookieHelper.getCookie("user")) {
             dispatch(logout());
+            if (sessionStorage.getItem("userID")) {
+                sessionStorage.removeItem("userID");
+            }
             history.push("/");
+            socket.emit("userDisconect", {
+                _id,
+                _socketID: sessionStorage.getItem("SocketID"),
+            });
+            socket.disconnect();
         }
     };
 
@@ -59,6 +73,13 @@ function authenticate(token) {
                 if (response.data.status) {
                     dispatch(success(response.data));
                     history.push("/");
+                    sessionStorage.setItem("userID", response.data.user._id);
+                    socket.on("connect", () => {
+                        socket.emit("userConnect", {
+                            _id: response.data.user._id,
+                            _socketID: sessionStorage.getItem("SocketID"),
+                        });
+                    });
                 } else {
                     dispatch(failure(response.data));
                 }

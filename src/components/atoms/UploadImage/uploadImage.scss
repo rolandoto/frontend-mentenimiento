@@ -1,0 +1,33 @@
+@import "../../../vars";
+
+.container_image_preview {
+    width: 200px;
+    border-radius: 50%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-spacing: 5px;
+    border: 1px dashed #d4d4d4;
+
+    .preview_image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .no_file {
+        @include custom_center("column", center, center);
+        color: #d4d4d4;
+    }
+
+    input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 999;
+    }
+}

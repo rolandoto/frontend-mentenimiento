@@ -3,7 +3,7 @@ import { Text } from "../../atoms";
 import { Search as SearchIcon } from "@material-ui/icons";
 import "./search.scss";
 
-export const Search = (_) => {
+export const Search = ({ background_dark }) => {
     const [showDetail, setShowDetail] = useState(true);
 
     const evaluateAnimation = (e) => {
@@ -16,8 +16,13 @@ export const Search = (_) => {
         }
     };
 
+    const evaluateClass = (_) => {
+        const extraClass = background_dark ? "background_dark" : "background_border";
+        return "search_bar " + extraClass;
+    };
+
     return (
-        <div className="search_bar">
+        <div className={evaluateClass()}>
             {showDetail && (
                 <div className="input_ovew_items">
                     <SearchIcon />

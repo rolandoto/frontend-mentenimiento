@@ -10,6 +10,7 @@ export const Input = ({
     min = 1,
     max = min + 1,
     height,
+    defaultValue = "",
     ...rest
 }) => {
     const textRef = useRef();
@@ -17,7 +18,7 @@ export const Input = ({
     const [errors, setErrors] = useState(false);
     const [isValid, setIsValid] = useState(false);
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState(defaultValue);
 
     const evaluateInput = (_) => {
         if (textRef.current) {
@@ -46,7 +47,7 @@ export const Input = ({
 
         if (originalValue.length < min) {
             setErrors({
-                message: `The field ${identifier} must contain minimun ${min} characters.`,
+                message: `El campo ${placeholder} debe contener mínimo ${min} caracteres.`,
             });
             setIsValid(false);
             return false;
@@ -56,7 +57,7 @@ export const Input = ({
             const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if (!re.test(String(originalValue).toLowerCase())) {
                 setErrors({
-                    message: `The email format is incorrect,`,
+                    message: `El formato del email es incorrecto.`,
                 });
                 setIsValid(false);
                 return false;
@@ -66,7 +67,7 @@ export const Input = ({
         if (identifier !== "email") {
             if (originalValue.length > max) {
                 setErrors({
-                    message: `The field ${identifier} only can contain ${max} characters.`,
+                    message: `El campo ${placeholder} solo puede contener ${max} caracteres.`,
                 });
 
                 const newValue = originalValue.substr(0, max);
@@ -84,14 +85,16 @@ export const Input = ({
     };
 
     useEffect(() => {
-        const checkErr = error.find((err) => {
-            return err.type === identifier;
-        });
+        if (error) {
+            const checkErr = error.find((err) => {
+                return err.type === identifier;
+            });
 
-        if (checkErr !== undefined) {
-            setErrors(checkErr);
-        } else {
-            setErrors(false);
+            if (checkErr !== undefined) {
+                setErrors(checkErr);
+            } else {
+                setErrors(false);
+            }
         }
     }, [error, identifier]);
 

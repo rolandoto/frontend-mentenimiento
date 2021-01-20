@@ -22,7 +22,7 @@ export const Navbar = (_) => {
                         colored
                     />
                 </div>
-                <Search />
+                <Search background_dark />
                 <div className="action_section">
                     <Dropdown image username  />
                 </div>

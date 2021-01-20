@@ -25,8 +25,56 @@ body {
     box-shadow: $shadow;
     width: 100%;
     border-radius: 15px;
-    padding: 15px
-    
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.modal_container {
+    @include absolute_center();
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #00000038;
+
+    .modal_content {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        position: relative;
+
+        .icon_close_modal {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .modal_size_normal {
+        width: 600px;
+    }
+
+    .modal_big {
+        width: 900px;
+    }
+}
+
+.center_between {
+    @include custom_center("row" , space-between , "")
+}
+
+.mb_20 {
+    margin-bottom: 20px
+}
+
+.p20 {
+    padding: 20px
+}
+
+.absolute_center {
+    @include absolute_center();
 }
 
 .rows {
@@ -60,6 +108,10 @@ body {
     width: 49%;
 }
 
+.col7 {
+    width: 60%;
+}
+
 .col8 {
     width: 70%;
 }
@@ -70,6 +122,10 @@ body {
 
 .position_relative {
     position: relative;
+}
+
+form {
+    width: 100%;
 }
 
 .center_elements {

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { PrivateRoute, cookieHelper } from "./helpers";
 import { LoginActions } from "./@actions";
-import { MainLayout } from "./layouts";
-import { Home, Login , Environments} from "./pages";
+import { MainLayout, Modal } from "./layouts";
+import { Alert } from "./components/organisms";
+import { Home, Login, Environments } from "./pages";
 
 export const App = (_) => {
     const dispatch = useDispatch();
@@ -27,9 +28,15 @@ export const App = (_) => {
                 <Route path="/login" component={Login} />
                 <MainLayout>
                     <PrivateRoute exact path="/" component={Home} />
-                    <PrivateRoute exact path="/environments" component={Environments} />
+                    <PrivateRoute
+                        exact
+                        path="/environments"
+                        component={Environments}
+                    />
                 </MainLayout>
             </Switch>
+            <Modal />
+            <Alert />
         </>
     );
 };

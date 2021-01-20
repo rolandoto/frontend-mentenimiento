@@ -1,7 +1,14 @@
 @import "../../../vars";
 
-.search_bar {
+.background_dark {
     background-color: $outherColor;
+}
+
+.background_border {
+    border: 1px solid #eaeaea;
+}
+
+.search_bar {
     height: 32px;
     border-radius: 16px;
     @include center_vertical();

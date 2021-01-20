@@ -1,9 +1,13 @@
 import React from "react";
 import { Container } from "../../../layouts";
-import { ListParent , ListContainer , ListItem, Example } from "../";
+import { List } from "../";
 
 export const EnvironmentList = ({ environments = [] }) => {
-    return <Container>
-        <Example />
-    </Container>;
+    const listHeader = ["Código del ambiente", "Nombre", ""];
+
+    return (
+        <Container>
+            <List header={listHeader} items={environments} />
+        </Container>
+    );
 };

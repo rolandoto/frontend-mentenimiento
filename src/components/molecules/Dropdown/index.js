@@ -28,7 +28,7 @@ export const Dropdown = ({
     };
 
     const logout = (_) => {
-        dispatch(LoginActions.logout());
+        dispatch(LoginActions.logout(user.user._id));
     };
 
     return (

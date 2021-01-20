@@ -33,16 +33,17 @@ function getEnvironments() {
 }
 
 function createEnvironment(environment) {
-    const configuration = {
+    var config = {
         method: "post",
+        url: process.env.REACT_APP_API + "environment/createEnvironment",
         headers: {
-            Authorization: cookieHelper.getCookie("user"),
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": cookieHelper.getCookie("user"),
         },
         data: environment,
-        url: process.env.REACT_APP_API + "environment/createEnvironment",
     };
 
-    return axios.request(configuration);
+    return axios(config);
 }
 
 function updateEnvironment(environment) {

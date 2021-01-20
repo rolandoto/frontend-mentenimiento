@@ -1,9 +1,11 @@
 $mainBackground: #f4f6fa;
 $outherColor: #e5e9f0;
-$outherSecondaryColor: #E8E7FB;
+$outherSecondaryColor: #e8e7fb;
 $fontColor: #83889c;
 $secondary: #5b83d7;
 $fontColorSecondary: #dce1e7;
+$success-color: #62C762;
+$error-color: #FF5242;
 $shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
 
 @mixin center_elements {
@@ -25,6 +27,19 @@ $shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
     @include center_elements();
     justify-content: center;
     align-items: center;
+}
+
+@mixin custom_center($d, $x, $y) {
+    @include center_elements();
+
+    @if $d == "row" {
+        justify-content: $x;
+        align-items: $y;
+    } @else {
+        flex-direction: column;
+        justify-content: $y;
+        align-items: $x;
+    }
 }
 
 @mixin center_direction($dest) {

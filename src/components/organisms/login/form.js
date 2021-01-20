@@ -42,7 +42,7 @@ export function LoginForm() {
             />
             <Input
                 identifier="password"
-                placeholder="Password"
+                placeholder="Contraseña"
                 type="password"
                 error={errors}
                 min={5}
