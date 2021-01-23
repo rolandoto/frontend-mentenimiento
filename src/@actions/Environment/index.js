@@ -35,12 +35,22 @@ function getEnvironments() {
                 }
             })
             .catch((err) => {
-                dispatch(
-                    callback(
-                        EnvironmentTypes.GETENVIRONMENTS_FAILURE,
-                        err.response.data
-                    )
-                );
+                if (err.response) {
+                    dispatch(
+                        callback(
+                            EnvironmentTypes.GETENVIRONMENTS_FAILURE,
+                            err.response.data
+                        )
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error al obtener el listado de ambientes, intentalo nuevamente",
+                        })
+                    );
+                }
             });
     };
 }

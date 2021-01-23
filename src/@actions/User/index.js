@@ -31,7 +31,18 @@ function login(user) {
                 }
             })
             .catch((err) => {
-                dispatch(failure(err.response.data));
+                if (err.response) {
+                    dispatch(failure(err.response.data));
+                } else {
+                    dispatch(
+                        failure({
+                            status: false,
+                            error: "general",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente.",
+                        })
+                    );
+                }
             });
     };
 
@@ -88,7 +99,20 @@ function authenticate(token) {
                 }
             })
             .catch((err) => {
-                dispatch(failure(err.response.data));
+                sessionStorage.removeItem("userID");
+                cookieHelper.deleteCookie("user");
+                if (err.response) {
+                    dispatch(failure(err.response.data));
+                } else {
+                    dispatch(
+                        failure({
+                            status: false,
+                            error: "general",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente.",
+                        })
+                    );
+                }
             });
     };
 

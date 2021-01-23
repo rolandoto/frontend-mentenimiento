@@ -43,7 +43,7 @@ function getMachines() {
                         alertActions.showAlert({
                             type: "failure",
                             message:
-                                "Ha ocurrido un error al optener el listado de maquinas, intentalo nuevamente",
+                                "Ha ocurrido un error al obtener el listado de maquinas, intentalo nuevamente",
                         })
                     );
                 }
