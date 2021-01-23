@@ -1,0 +1,52 @@
+@import "../../../vars";
+
+.select_container {
+    width: 100%;
+    margin: 10px 0;
+
+    select {
+        display: none;
+    }
+
+    .select_component {
+        position: relative;
+        width: 100%;
+        padding: 8px 10px;
+        min-height: 30px;
+        border: 1px solid #e2e2e2;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        .select_option_item {
+            width: 100%;
+            padding: 15px 10px;
+            transition: .5s all;
+
+            &:hover {
+                background-color: #f1f1f1;
+            }
+        }
+
+        .show_options_container {
+            position: absolute;
+            width: 100%;
+            top: 110%;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #e2e2e2;
+            border-radius: 5px;
+            z-index: 9999999999;
+        }
+
+        .arrow_down_icon {
+            position: absolute;
+            right: 10px;
+
+            svg {
+                font-size: 25px;
+            }
+        }
+    }
+}

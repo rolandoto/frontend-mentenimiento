@@ -1,8 +1,10 @@
 import axios from "axios";
+import { cookieHelper } from "../../helpers";
 
-export const LoginService = {
+export const UserService = {
     login,
     authenticate,
+    updateUser,
 };
 
 async function login(user) {
@@ -25,6 +27,19 @@ async function authenticate(token) {
         url: process.env.REACT_APP_API + "user/authenticate",
     };
 
+    const request = await axios.request(configuration);
+    return request;
+}
+
+async function updateUser(data) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data,
+        url: process.env.REACT_APP_API + "user/updateUser",
+    };
     const request = await axios.request(configuration);
     return request;
 }

@@ -8,18 +8,26 @@ export const AddEnvironmentComponent = ({ edit }) => {
 
     const eHandleSubmit = (e) => {
         e.preventDefault();
-
+        const data = new FormData(e.target);
         if (e.target.environmentPhoto.files.length > 0) {
-            // const data = new FormData(e.target);
-            // dispatch(environmentActions.createEnvironment(data));
+            if (!edit) {
+                dispatch(environmentActions.createEnvironment(data));
+            } else {
+                dispatch(environmentActions.updateEnvironment(data));
+                e.target.environmentPhoto.value = "";
+            }
         } else {
-            const environment = {
-                environmentID: e.target.environmentID.value,
-                environmentCode: e.target.environmentCode.value,
-                name: e.target.name.value,
-            };
+            if (!edit) {
+                dispatch(environmentActions.createEnvironment(data));
+            } else {
+                const environment = {
+                    environmentID: e.target.environmentID.value,
+                    environmentCode: e.target.environmentCode.value,
+                    name: e.target.name.value,
+                };
 
-            dispatch(environmentActions.updateEnvironment(environment));
+                dispatch(environmentActions.updateEnvironment(environment));
+            }
         }
     };
 
@@ -45,9 +53,11 @@ export const AddEnvironmentComponent = ({ edit }) => {
                         identifier="environmentPhoto"
                         defaultPhoto={
                             edit
-                                ? process.env.REACT_APP_API +
-                                  edit.environmentPhoto.folder +
-                                  edit.environmentPhoto.filename
+                                ? edit.environmentPhoto
+                                    ? process.env.REACT_APP_API +
+                                      edit.environmentPhoto.folder +
+                                      edit.environmentPhoto.filename
+                                    : ""
                                 : ""
                         }
                     />
@@ -56,7 +66,7 @@ export const AddEnvironmentComponent = ({ edit }) => {
                     {edit && (
                         <Input
                             identifier="environmentID"
-                            type="text"
+                            type="hidden"
                             placeholder="ID del ambiente"
                             min={5}
                             max={50}

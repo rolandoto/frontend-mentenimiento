@@ -1,7 +1,7 @@
 @import "../../../vars";
 
 .list_filters {
-    @include custom_center("row" , space-between , center);
+    @include custom_center("row", space-between, center);
     padding: 20px;
     padding-top: 0;
 }
@@ -21,6 +21,7 @@
     }
 }
 
+
 .list_item {
     display: grid;
     align-items: center;
@@ -29,21 +30,37 @@
     height: 50px;
     border-bottom: 1px solid #f7f7f7;
 
-    &:last-child {
-        border: 0
+    .item_actions {
+        display: flex;
+
+        .edit_item {
+            &:hover {
+                svg {
+                    fill: $secondary;
+                }
+            }
+        }
+        .delete_item {
+            &:hover {
+                svg {
+                    fill: $error-color;
+                }
+            }
+        }
+
+        .item_edit_trigger {
+            @include absolute_center();
+            width: 40px;
+            cursor: pointer;
+
+            svg {
+                fill: rgb(230, 230, 230);
+            }
+        }
     }
-}
 
-.item_edit_trigger {
-    @include absolute_center();
-    width: 40px;
-    border-radius: 8px;
-    border: 1px solid #f5f5f5;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-
-    svg {
-        fill: rgb(230, 230, 230);
+    &:last-child {
+        border: 0;
     }
 }
 
@@ -52,7 +69,6 @@
     font-weight: 600;
     color: #879196;
 }
-
 
 .item_details {
     width: 100%;

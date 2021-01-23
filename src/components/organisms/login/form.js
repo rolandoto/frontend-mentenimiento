@@ -1,6 +1,6 @@
 import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginActions } from "../../../@actions";
+import { UserActions } from "../../../@actions";
 import { Input, Button } from "../../atoms";
 import './form.scss'
 
@@ -25,7 +25,7 @@ export function LoginForm() {
             password: e.target.password.value,
         };
 
-        dispatch(LoginActions.login(user));
+        dispatch(UserActions.login(user));
     };
 
     return (

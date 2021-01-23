@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { PrivateRoute, cookieHelper } from "./helpers";
-import { LoginActions } from "./@actions";
+import { UserActions } from "./@actions";
 import { MainLayout, Modal } from "./layouts";
 import { Alert } from "./components/organisms";
-import { Home, Login, Environments } from "./pages";
+import { Home, Login, Environments, Profile , Machines} from "./pages";
 
 export const App = (_) => {
     const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const App = (_) => {
         (_) => {
             const user = cookieHelper.getCookie("user");
             if (user) {
-                dispatch(LoginActions.authenticate(user));
+                dispatch(UserActions.authenticate(user));
             }
         },
         [dispatch]
@@ -33,6 +33,8 @@ export const App = (_) => {
                         path="/environments"
                         component={Environments}
                     />
+                    <PrivateRoute exact path="/profile" component={Profile} />
+                    <PrivateRoute exact path="/machines" component={Machines} />
                 </MainLayout>
             </Switch>
             <Modal />

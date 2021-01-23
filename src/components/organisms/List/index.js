@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./list.scss";
 import { Search } from "../../molecules";
-import { AddEnvironmentComponent } from "../../organisms/Modals";
 import {
-    ArrowDropDown,
     ArrowBackIos,
     ArrowForwardIos,
+    Edit,
+    Delete,
 } from "@material-ui/icons";
 
 const ListContainer = ({ children }) => {
@@ -25,7 +25,7 @@ const ListHeader = ({ items = [] }) => (
     </ul>
 );
 
-const ListItems = ({ items = [] }) => {
+const ListItems = ({ items = [], EditC, showKeys = [], onDelete }) => {
     const [edit, setEdit] = useState("");
     const evalueEdit = (item) => {
         if (item._id === edit) {
@@ -34,8 +34,6 @@ const ListItems = ({ items = [] }) => {
         }
 
         setEdit(item._id);
-
-        console.log(item);
     };
 
     return (
@@ -48,25 +46,38 @@ const ListItems = ({ items = [] }) => {
                             gridTemplateColumns: `repeat(3, 1fr)`,
                         }}
                     >
-                        <p>{item.environmentCode}</p>
-                        <p>{item.name}</p>
+                        {showKeys.map((k, i) => (
+                            <p key={i}>{item[k]}</p>
+                        ))}
                         <div className="item_actions">
                             <div
-                                className="item_edit_trigger"
+                                className="item_edit_trigger edit_item"
                                 onClick={() => evalueEdit(item)}
                             >
-                                <ArrowDropDown />
+                                <Edit />
+                            </div>
+                            <div
+                                className="item_edit_trigger delete_item"
+                                onClick={() => onDelete(item)}
+                            >
+                                <Delete />
                             </div>
                         </div>
                     </li>
-                    {edit === item._id && <AddEnvironmentComponent edit={item} />}
+                    {edit === item._id && <EditC edit={item} />}
                 </div>
             ))}
         </ul>
     );
 };
 
-export const List = ({ header = [], items = [] }) => {
+export const List = ({
+    header = [],
+    items = [],
+    EditComponent,
+    keys = [],
+    onDelete,
+}) => {
     const [itemsPerView, setItemsPerView] = useState(6);
     const [showItems, setShowItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +88,6 @@ export const List = ({ header = [], items = [] }) => {
 
     useEffect(
         (_) => {
-            items.reverse();
             let firstRender = [];
             setItemsPerView(6);
             for (let i = 0; i < itemsPerView; i++) {
@@ -126,7 +136,12 @@ export const List = ({ header = [], items = [] }) => {
             </div>
             <div>
                 <ListHeader items={header} />
-                <ListItems items={showItems} />
+                <ListItems
+                    items={showItems}
+                    EditC={EditComponent}
+                    showKeys={keys}
+                    onDelete={onDelete}
+                />
             </div>
         </ListContainer>
     );

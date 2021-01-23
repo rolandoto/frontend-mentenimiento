@@ -1,0 +1,29 @@
+@import "../../../vars";
+
+.separator_top_profile {
+    width: 90%;
+    height: 1px;
+    background-color: #f5f5f5;
+    margin: 10px 0;
+}
+
+.editProfileData {
+    width: 100%;
+    padding: 10px;
+}
+
+.form_action {
+    width: 100%;
+    padding: 30px 10px;
+    background-color: $mainBackground;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.profile_data {
+    width: 100%;
+
+    .text_profile_detail {
+        padding: 10px 15px;
+    }
+}

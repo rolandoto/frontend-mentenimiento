@@ -4,3 +4,4 @@ export * from "./Avatar";
 export * from "./Text";
 export * from "./Link";
 export * from "./UploadImage";
+export * from "./Select";

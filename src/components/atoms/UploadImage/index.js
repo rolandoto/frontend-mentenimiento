@@ -1,10 +1,14 @@
 import React, { useRef, useState } from "react";
-import { Camera } from "@material-ui/icons";
+import { CameraAlt } from "@material-ui/icons";
+import cx from "classnames";
 import "./uploadImage.scss";
 
-export const UploadImage = ({ identifier , defaultPhoto }) => {
+export const UploadImage = ({ identifier, defaultPhoto }) => {
     const file = useRef();
-    const [imagePreview, setImagePreview] = useState(defaultPhoto ? defaultPhoto : "");
+    const [imagePreview, setImagePreview] = useState(
+        defaultPhoto ? defaultPhoto : ""
+    );
+    const [imageIcon, setImageIcon] = useState(false);
 
     const filePreview = (_) => {
         const filePreview = file.current.files[0];
@@ -23,7 +27,19 @@ export const UploadImage = ({ identifier , defaultPhoto }) => {
     };
 
     return (
-        <div className="container_image_preview absolute_center">
+        <div
+            className={cx(
+                "container_image_preview absolute_center",
+                imagePreview ? "no_border" : ""
+            )}
+            onMouseEnter={() => setImageIcon(true)}
+            onMouseLeave={() => setImageIcon(false)}
+        >
+            {imageIcon && imagePreview && (
+                <div className="show_camera_on_hover">
+                    <CameraAlt />
+                </div>
+            )}
             {imagePreview && (
                 <img
                     className="preview_image"
@@ -34,7 +50,7 @@ export const UploadImage = ({ identifier , defaultPhoto }) => {
 
             {!imagePreview && (
                 <div className="preview_image no_file">
-                    <Camera />
+                    <CameraAlt />
                     <span>Subir foto</span>
                 </div>
             )}

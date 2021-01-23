@@ -126,6 +126,12 @@ function updateEnvironment(_environment) {
             .then((response) => {
                 if (response.data.status) {
                     dispatch(
+                        callback(EnvironmentTypes.GETENVIRONMENTS_SUCCESS, {
+                            ...response.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch(
                         alertActions.showAlert({
                             type: "success",
                             message: response.data.message,
@@ -154,30 +160,50 @@ function updateEnvironment(_environment) {
 function deleteEnvironment(_id) {
     return (dispatch) => {
         dispatch(request(EnvironmentTypes.DELETEENVIRONMENT_REQUEST));
-
         environmentService
             .deleteEnvironment(_id)
             .then((response) => {
                 if (response.data.status) {
                     dispatch(
-                        callback(
-                            EnvironmentTypes.DELETEENVIRONMENT_SUCCESS,
-                            response
-                        )
+                        callback(EnvironmentTypes.GETENVIRONMENTS_SUCCESS, {
+                            delete: true,
+                            _id,
+                            status: response.data.status,
+                            message: response.data.message,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: response.data.message,
+                        })
                     );
                 } else {
                     dispatch(
-                        callback(
-                            EnvironmentTypes.DELETEENVIRONMENT_FAILURE,
-                            response
-                        )
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: response.data.message,
+                        })
                     );
                 }
             })
             .catch((err) => {
-                dispatch(
-                    callback(EnvironmentTypes.DELETEENVIRONMENT_FAILURE, err)
-                );
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, por favor intentalo nuevamente.",
+                        })
+                    );
+                }
             });
     };
 }

@@ -1,5 +1,29 @@
 import { EnvironmentTypes } from "../../@types";
 
+function evaluateEnvironments(state, action) {
+    if (action.edit) {
+        return state.status
+            ? state.environments.map((environmet) => {
+                  if (environmet._id === action.updatedEnvironment._id) {
+                      return action.updatedEnvironment;
+                  }
+                  return environmet;
+              })
+            : action.environments;
+    } else {
+        if (action.delete) {
+            const environments = state.environments.filter((environment) => {
+                return environment._id !== action._id;
+            });
+            return environments
+        } else {
+            return state.status
+                ? [...state.environments, action.environments]
+                : action.environments;
+        }
+    }
+}
+
 export const EnvironmentsAllReducer = (state = {}, action) => {
     switch (action.type) {
         case EnvironmentTypes.GETENVIRONMENTS_REQUEST:
@@ -7,9 +31,10 @@ export const EnvironmentsAllReducer = (state = {}, action) => {
                 loading: true,
             };
         case EnvironmentTypes.GETENVIRONMENTS_SUCCESS:
-            const environmentList = state.status
-                ? [...state.environments, action.response.environments]
-                : action.response.environments;
+            const environmentList = evaluateEnvironments(
+                state,
+                action.response
+            );
             return {
                 status: action.response.status,
                 environments: environmentList,

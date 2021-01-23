@@ -21,6 +21,7 @@
     flex-direction: column;
     cursor: pointer;
     animation: shake 1s linear;
+    z-index: 9999;
 
     @keyframes shake {
         0% {

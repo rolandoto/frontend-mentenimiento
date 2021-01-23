@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import cx from 'classnames';
 import "./input.scss";
 
 export const Input = ({
@@ -100,7 +101,8 @@ export const Input = ({
 
     return (
         <div
-            className={errors ? "input_item error_margin" : "input_item"}
+            className={cx(errors ? "input_item error_margin" : "input_item",
+            type === "hidden" ? "hide_element" : "")}
             style={{ height: height }}
         >
             {animated && (

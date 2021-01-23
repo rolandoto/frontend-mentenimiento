@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Text } from "../../atoms";
 import { ArrowDropDown } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { LoginActions } from "../../../@actions";
+import { UserActions } from "../../../@actions";
 import "./dropdown.scss";
 
 export const Dropdown = ({
@@ -28,7 +28,7 @@ export const Dropdown = ({
     };
 
     const logout = (_) => {
-        dispatch(LoginActions.logout(user.user._id));
+        dispatch(UserActions.logout(user.user._id));
     };
 
     return (

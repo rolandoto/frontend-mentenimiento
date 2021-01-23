@@ -38,7 +38,7 @@ function createEnvironment(environment) {
         url: process.env.REACT_APP_API + "environment/createEnvironment",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": cookieHelper.getCookie("user"),
+            Authorization: cookieHelper.getCookie("user"),
         },
         data: environment,
     };
@@ -65,9 +65,9 @@ function deleteEnvironment(_id) {
         headers: {
             Authorization: cookieHelper.getCookie("user"),
         },
-        data: JSON.parse({
+        data: {
             environmentID: _id,
-        }),
+        },
         url: process.env.REACT_APP_API + "environment/deleteEnvironment",
     };
 

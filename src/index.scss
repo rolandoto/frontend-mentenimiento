@@ -3,6 +3,7 @@
 body {
     min-height: 100vh;
     background-color: $mainBackground;
+    color: $fontColor;
 }
 
 .loading_screen {
@@ -36,6 +37,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 999;
     background: #00000038;
 
     .modal_content {
@@ -77,6 +79,10 @@ body {
     @include absolute_center();
 }
 
+.direction_column {
+    flex-direction: column
+}
+
 .rows {
     @include center_elements();
     justify-content: space-between;
@@ -92,6 +98,18 @@ body {
     height: 20px;
 }
 
+.no_padding {
+    padding: 0;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
 .col3 {
     width: 20%;
 }
@@ -101,7 +119,7 @@ body {
 }
 
 .col5 {
-    width: 40%;
+    width: 39%;
 }
 
 .col6 {
@@ -109,7 +127,7 @@ body {
 }
 
 .col7 {
-    width: 60%;
+    width: 59%;
 }
 
 .col8 {
@@ -122,6 +140,10 @@ body {
 
 .position_relative {
     position: relative;
+}
+
+.hide_element {
+    display: none !important;
 }
 
 form {

@@ -1,17 +1,20 @@
-import { LoginTypes } from "../../@types";
-import { LoginService } from "../../@services";
+import { UserTypes } from "../../@types";
+import { alertActions } from "../";
+import { UserService } from "../../@services";
+import { request, callback } from "../";
 import { cookieHelper, history, socket } from "../../helpers";
 
-export const LoginActions = {
+export const UserActions = {
     login,
     authenticate,
     logout,
+    updateUser,
 };
 
 function login(user) {
     return (dispatch) => {
         dispatch(request());
-        LoginService.login(user)
+        UserService.login(user)
             .then((response) => {
                 if (response.data.status) {
                     cookieHelper.createCookie("user", response.data.token);
@@ -33,13 +36,13 @@ function login(user) {
     };
 
     function request() {
-        return { type: LoginTypes.LOGIN_REQUEST };
+        return { type: UserTypes.LOGIN_REQUEST };
     }
     function success(response) {
-        return { type: LoginTypes.LOGIN_SUCCESS, response };
+        return { type: UserTypes.LOGIN_SUCCESS, response };
     }
     function failure(response) {
-        return { type: LoginTypes.LOGIN_FAILURE, response };
+        return { type: UserTypes.LOGIN_FAILURE, response };
     }
 }
 
@@ -61,14 +64,14 @@ function logout(_id) {
     };
 
     function logout() {
-        return { type: LoginTypes.USER_LOGOUT };
+        return { type: UserTypes.USER_LOGOUT };
     }
 }
 
 function authenticate(token) {
     return (dispatch) => {
         dispatch(request());
-        LoginService.authenticate(token)
+        UserService.authenticate(token)
             .then((response) => {
                 if (response.data.status) {
                     dispatch(success(response.data));
@@ -90,12 +93,61 @@ function authenticate(token) {
     };
 
     function request() {
-        return { type: LoginTypes.LOGIN_REQUEST };
+        return { type: UserTypes.LOGIN_REQUEST };
     }
     function success(response) {
-        return { type: LoginTypes.LOGIN_SUCCESS, response };
+        return { type: UserTypes.LOGIN_SUCCESS, response };
     }
     function failure(response) {
-        return { type: LoginTypes.LOGIN_FAILURE, response };
+        return { type: UserTypes.LOGIN_FAILURE, response };
     }
+}
+
+function updateUser(data) {
+    return (dispatch) => {
+        dispatch(request(UserTypes.USERUPDATE_REQUEST));
+
+        UserService.updateUser(data)
+            .then((response) => {
+                if (response.data.status) {
+                    dispatch(
+                        callback(UserTypes.LOGIN_SUCCESS, {
+                            ...response.data,
+                            update: true,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: response.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
 }
