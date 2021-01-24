@@ -13,3 +13,18 @@ export const ModalReducer = (state = {}, action) => {
             return state;
     }
 };
+
+export const ModalDetailReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ModalTypes.SHOW_MODAL_DETAIL:
+            return {
+                show: true,
+                item: action.item,
+                component: action.component,
+            };
+        case ModalTypes.HIDE_MODAL_DETAIL:
+            return {};
+        default:
+            return state;
+    }
+};

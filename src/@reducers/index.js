@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { AuthReducer } from "./User";
-import { ModalReducer } from "./Modal";
+import { ModalReducer, ModalDetailReducer } from "./Modal";
 import { AlertReducer } from "./Alert";
 import { EnvironmentsAllReducer } from "./Environments";
 import { MachineAllReducer } from "./Machine";
@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
     AlertReducer,
     EnvironmentsAllReducer,
     MachineAllReducer,
+    ModalDetailReducer,
 });
 
 const evalueReducer = (state, action) =>

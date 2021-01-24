@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { PrivateRoute, cookieHelper } from "./helpers";
 import { UserActions } from "./@actions";
-import { MainLayout, Modal } from "./layouts";
+import { MainLayout, Modal, ModalDetails } from "./layouts";
 import { Alert } from "./components/organisms";
-import { Home, Login, Environments, Profile , Machines} from "./pages";
+import { Home, Login, Environments, Profile, Machines } from "./pages";
 
 export const App = (_) => {
     const dispatch = useDispatch();
@@ -38,6 +38,7 @@ export const App = (_) => {
                 </MainLayout>
             </Switch>
             <Modal />
+            <ModalDetails />
             <Alert />
         </>
     );

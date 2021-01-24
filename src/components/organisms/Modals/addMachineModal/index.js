@@ -33,7 +33,15 @@ export const AddMachineComponent = ({ edit }) => {
                     environmentID: e.target.environmentID.value,
                     machineCode: e.target.machineCode.value,
                     name: e.target.name.value,
+                    totalHoursToMaintenance:
+                        e.target.totalHoursToMaintenance.value,
                 };
+
+                if (!edit) {
+                    machine.totalHoursWorking =
+                        e.target.totalHoursWorking.value;
+                }
+                
                 dispatch(machineActions.updateMachine(machine));
             }
         }
@@ -95,7 +103,6 @@ export const AddMachineComponent = ({ edit }) => {
                                 <Option
                                     key={environment._id}
                                     value={environment._id}
-                                    
                                     text={environment.environmentCode}
                                 />
                             ))}
@@ -125,6 +132,36 @@ export const AddMachineComponent = ({ edit }) => {
                                 defaultValue={edit ? edit.name : ""}
                                 animated
                             />
+                        </div>
+                    </div>
+                    <div className="rows">
+                        <div className="col6">
+                            <Input
+                                identifier="totalHoursToMaintenance"
+                                type="number"
+                                placeholder="Horas para el mantenimiento"
+                                max={200}
+                                height={50}
+                                defaultValue={
+                                    edit ? edit.totalHoursToMaintenance : ""
+                                }
+                                animated
+                            />
+                        </div>
+                        <div className="col6">
+                            {!edit && (
+                                <Input
+                                    identifier="totalHoursWorking"
+                                    type="number"
+                                    placeholder="Horas de uso (Opcional)"
+                                    max={200}
+                                    height={50}
+                                    defaultValue={
+                                        edit ? edit.totalHoursWorking : ""
+                                    }
+                                    animated
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

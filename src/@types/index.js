@@ -45,6 +45,8 @@ export const MachinesTypes = {
 export const ModalTypes = {
     SHOW_MODAL: "SHOW_MODAL",
     HIDE_MODAL: "HIDE_MODAL",
+    SHOW_MODAL_DETAIL: "SHOW_MODAL_DETAIL",
+    HIDE_MODAL_DETAIL: "HIDE_MODAL_DETAIL",
 };
 
 export const AlertTypes = {

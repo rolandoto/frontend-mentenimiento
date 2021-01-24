@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "../../../layouts";
 import { AddMachineComponent } from "../../organisms/Modals";
-import { alertActions, machineActions } from "../../../@actions";
+import { alertActions, machineActions, modalActions } from "../../../@actions";
 import { List } from "../";
 import { useDispatch } from "react-redux";
 
@@ -27,6 +27,10 @@ export const MachinesList = ({ machines = [] }) => {
         }
     };
 
+    const onDetailPressed = (item) => {
+        dispatch(modalActions.showModalDetail("AddMachineComponent" , item));
+    };
+
     return (
         <Container>
             <List
@@ -35,6 +39,7 @@ export const MachinesList = ({ machines = [] }) => {
                 EditComponent={AddMachineComponent}
                 keys={keys}
                 onDelete={onDeleteHandle}
+                details={onDetailPressed}
             />
         </Container>
     );

@@ -9,7 +9,14 @@
     .action_section {
         height: 100%;
         display: flex;
+        align-items: center;
         justify-content: flex-end;
+
+        .icon_space_right {
+            margin-right: 22px;
+            margin-top: 5px;
+            font-size: 1.3rem;
+        }
     }
 
     .brand {

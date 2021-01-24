@@ -40,6 +40,15 @@
                 }
             }
         }
+        
+        .show_item {
+            &:hover {
+                svg {
+                    fill: $terceary;
+                }
+            }
+        }
+        
         .delete_item {
             &:hover {
                 svg {

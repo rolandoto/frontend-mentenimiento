@@ -30,9 +30,9 @@ body {
     padding-bottom: 15px;
 }
 
-.modal_container {
-    @include absolute_center();
+.modal_shadow {
     position: fixed;
+    overflow: hidden;
     top: 0;
     left: 0;
     width: 100vw;
@@ -40,39 +40,61 @@ body {
     z-index: 999;
     background: #00000038;
 
-    .modal_content {
-        background-color: #fff;
-        padding: 10px;
-        border-radius: 10px;
-        position: relative;
+    .icon_close_modal {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+    }
 
-        .icon_close_modal {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            cursor: pointer;
+    .modal_container {
+        @include absolute_center();
+
+        .modal_content {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal_size_normal {
+            width: 600px;
+        }
+
+        .modal_big {
+            width: 900px;
         }
     }
 
-    .modal_size_normal {
-        width: 600px;
-    }
+    .modal_details {
+        background-color: #fff;
+        position: absolute;
+        right: 0;
+        width: 80vw;
+        height: 100vh;
+        animation: show_modal .3s ease-out;
 
-    .modal_big {
-        width: 900px;
+        @keyframes show_modal {
+            from {
+                right: -100%;
+            }
+            to {
+                right: 0;
+            }
+        }
     }
 }
 
 .center_between {
-    @include custom_center("row" , space-between , "")
+    @include custom_center("row", space-between, "");
 }
 
 .mb_20 {
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 .p20 {
-    padding: 20px
+    padding: 20px;
 }
 
 .absolute_center {
@@ -80,7 +102,7 @@ body {
 }
 
 .direction_column {
-    flex-direction: column
+    flex-direction: column;
 }
 
 .rows {

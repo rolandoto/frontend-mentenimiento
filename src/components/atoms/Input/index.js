@@ -122,10 +122,11 @@ export const Input = ({
                 type,
                 placeholder: placeholder && !animated ? placeholder : null,
                 name: identifier ? identifier : null,
-                id: identifier ? identifier : null,
                 className: errors ? "errorInput" : "",
                 ...rest,
                 value: inputValue,
+                min: type === "number" ? 0 : null,
+                max: type === "number" && max ? max : null,
                 onClick: () => evaluateInput(),
                 onChange: (e) => [
                     evaluateInput(),

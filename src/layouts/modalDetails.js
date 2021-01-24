@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { modalActions } from "../@actions";
 import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../@actions";
 import { Close } from "@material-ui/icons";
 import * as ModalComponentSelector from "../components/organisms/Modals";
 
-export const Modal = ({ children, component }) => {
-    const modal = useSelector((state) => state.ModalReducer);
-    const dispatch = useDispatch();
+export const ModalDetails = (_) => {
+    const modal = useSelector((state) => state.ModalDetailReducer);
     const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(
         (_) => {
@@ -21,15 +21,16 @@ export const Modal = ({ children, component }) => {
     );
 
     const closeModal = (_) => {
-        dispatch(modalActions.closeModal());
+        dispatch(modalActions.closeModalDetail());
     };
 
     if (showModal && modal.show) {
         const Component = ModalComponentSelector[modal.component];
+
         if (Component) {
             return (
-                <div className="modal_shadow modal_container">
-                    <div className="modal_content modal_big">
+                <div className="modal_shadow">
+                    <div className="modal_details">
                         <Close
                             onClick={() => closeModal()}
                             className="icon_close_modal"

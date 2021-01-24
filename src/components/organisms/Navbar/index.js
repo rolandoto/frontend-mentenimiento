@@ -1,6 +1,7 @@
 import React from "react";
 import { Dropdown, Search } from "../../molecules";
 import { Text } from "../../atoms";
+import { Notifications , Textsms} from "@material-ui/icons";
 import "./navbar.scss";
 
 export const Navbar = (_) => {
@@ -24,6 +25,8 @@ export const Navbar = (_) => {
                 </div>
                 <Search background_dark />
                 <div className="action_section">
+                    <Notifications className="icon_space_right" />
+                    <Textsms className="icon_space_right" />
                     <Dropdown image username  />
                 </div>
             </div>

@@ -6,6 +6,7 @@ import {
     ArrowForwardIos,
     Edit,
     Delete,
+    Apps,
 } from "@material-ui/icons";
 
 const ListContainer = ({ children }) => {
@@ -25,7 +26,7 @@ const ListHeader = ({ items = [] }) => (
     </ul>
 );
 
-const ListItems = ({ items = [], EditC, showKeys = [], onDelete }) => {
+const ListItems = ({ items = [], EditC, showKeys = [], onDelete, details }) => {
     const [edit, setEdit] = useState("");
     const evalueEdit = (item) => {
         if (item._id === edit) {
@@ -56,6 +57,14 @@ const ListItems = ({ items = [], EditC, showKeys = [], onDelete }) => {
                             >
                                 <Edit />
                             </div>
+                            {details && (
+                                <div
+                                    className="item_edit_trigger show_item"
+                                    onClick={() => details(item)}
+                                >
+                                    <Apps />
+                                </div>
+                            )}
                             <div
                                 className="item_edit_trigger delete_item"
                                 onClick={() => onDelete(item)}
@@ -77,6 +86,7 @@ export const List = ({
     EditComponent,
     keys = [],
     onDelete,
+    details,
 }) => {
     const [itemsPerView, setItemsPerView] = useState(6);
     const [showItems, setShowItems] = useState([]);
@@ -141,6 +151,7 @@ export const List = ({
                     EditC={EditComponent}
                     showKeys={keys}
                     onDelete={onDelete}
+                    details={details}
                 />
             </div>
         </ListContainer>
