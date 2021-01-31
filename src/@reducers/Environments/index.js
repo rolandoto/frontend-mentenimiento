@@ -15,7 +15,7 @@ function evaluateEnvironments(state, action) {
             const environments = state.environments.filter((environment) => {
                 return environment._id !== action._id;
             });
-            return environments
+            return environments;
         } else {
             return state.status
                 ? [...state.environments, action.environments]

@@ -1,6 +1,6 @@
 import { AlertTypes } from "../../@types";
 
-export const AlertReducer = ( state = {}, action ) => {
+export const AlertReducer = (state = {}, action) => {
     switch (action.type) {
         case AlertTypes.SHOW_ALERT:
             return {

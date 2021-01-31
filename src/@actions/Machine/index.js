@@ -4,10 +4,11 @@ import { MachinesTypes } from "../../@types";
 
 export const machineActions = {
     getMachines,
-    getMachine,
+    getMachineNoAuth,
     createMachine,
     updateMachine,
     deleteMachine,
+    registerMachineUse,
 };
 
 function getMachines() {
@@ -51,8 +52,45 @@ function getMachines() {
     };
 }
 
-function getMachine(_id) {
-    return (dispatch) => {};
+function getMachineNoAuth(_id) {
+    return (dispatch) => {
+        dispatch(request(MachinesTypes.GETMACHINE_REQUEST));
+
+        machineService
+            .getMachineNoAuth(_id)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINE_SUCCESS, res.data)
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
 }
 
 function createMachine(data) {
@@ -73,6 +111,51 @@ function createMachine(data) {
                         })
                     );
                     dispatch(modalActions.closeModal());
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function registerMachineUse(data) {
+    return (dispatch) => {
+        machineService
+            .registerMachineUse(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINE_SUCCESS, res.data)
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
                 } else {
                     dispatch(
                         alertActions.showAlert({

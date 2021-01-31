@@ -10,7 +10,7 @@
         bottom: -35px;
         color: tomato;
 
-        @media screen and (max-width: 1000px){
+        @media screen and (max-width: 1000px) {
             bottom: -40px;
         }
     }
@@ -64,7 +64,7 @@
 .error_margin {
     margin-bottom: 45px;
 
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
         margin-bottom: 60px;
     }
 }

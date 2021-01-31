@@ -38,10 +38,10 @@ export const AddMachineComponent = ({ edit }) => {
                 };
 
                 if (!edit) {
-                    machine.totalHoursWorking =
-                        e.target.totalHoursWorking.value;
+                    machine.totalHoursRegisted =
+                        e.target.totalHoursRegisted.value;
                 }
-                
+
                 dispatch(machineActions.updateMachine(machine));
             }
         }
@@ -140,7 +140,7 @@ export const AddMachineComponent = ({ edit }) => {
                                 identifier="totalHoursToMaintenance"
                                 type="number"
                                 placeholder="Horas para el mantenimiento"
-                                max={200}
+                                max={999}
                                 height={50}
                                 defaultValue={
                                     edit ? edit.totalHoursToMaintenance : ""
@@ -151,13 +151,13 @@ export const AddMachineComponent = ({ edit }) => {
                         <div className="col6">
                             {!edit && (
                                 <Input
-                                    identifier="totalHoursWorking"
+                                    identifier="totalHoursRegisted"
                                     type="number"
                                     placeholder="Horas de uso (Opcional)"
                                     max={200}
                                     height={50}
                                     defaultValue={
-                                        edit ? edit.totalHoursWorking : ""
+                                        edit ? edit.totalHoursRegisted : ""
                                     }
                                     animated
                                 />

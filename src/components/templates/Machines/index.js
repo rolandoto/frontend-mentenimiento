@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 import { Button } from "../../atoms";
 import { MachinesList } from "../../organisms";
 import { AddCircle } from "@material-ui/icons";
-import { modalActions } from '../../../@actions';
-import { useDispatch } from 'react-redux';
+import { modalActions } from "../../../@actions";
+import { useDispatch } from "react-redux";
 
-export const MachinesTemplate = ({machines = [] , environmnets = []}) => {
-
+export const MachinesTemplate = ({ machines = [], environmnets = [] }) => {
     const dispatch = useDispatch();
 
     const addMachine = (_) => {
@@ -27,4 +26,4 @@ export const MachinesTemplate = ({machines = [] , environmnets = []}) => {
             <MachinesList machines={machines} />
         </>
     );
-}
+};

@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileData , EditProfile} from "../../organisms";
+import { ProfileData, EditProfile } from "../../organisms";
 import { useSelector } from "react-redux";
 
 export const ProfileTemplate = (_) => {

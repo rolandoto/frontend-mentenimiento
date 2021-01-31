@@ -5,8 +5,7 @@ import { Router } from "react-router-dom";
 import { history, store } from "./helpers";
 import { Provider } from "react-redux";
 import { App } from "./App";
-import 'typeface-poppins';
-
+import "typeface-poppins";
 
 ReactDOM.render(
     <React.StrictMode>

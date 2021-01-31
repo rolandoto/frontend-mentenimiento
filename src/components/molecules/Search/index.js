@@ -17,7 +17,9 @@ export const Search = ({ background_dark }) => {
     };
 
     const evaluateClass = (_) => {
-        const extraClass = background_dark ? "background_dark" : "background_border";
+        const extraClass = background_dark
+            ? "background_dark"
+            : "background_border";
         return "search_bar " + extraClass;
     };
 

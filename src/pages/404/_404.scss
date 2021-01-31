@@ -1,0 +1,28 @@
+.center_absolute_other_page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .text_responsive_mobile {
+        @media screen and (max-width: 550px) {
+            width: 300px;
+            text-align: center;
+        }
+    }
+
+    .btn_return {
+        text-decoration: none;
+        padding: 15px 20px;
+        color: #fff;
+        margin-top: 20px;
+        background-color: #7289f4;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+    }
+}

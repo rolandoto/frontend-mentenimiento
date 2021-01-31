@@ -1,5 +1,4 @@
 .avatar_image {
-
     position: relative;
 
     .responsive_image_avatar {
@@ -8,16 +7,15 @@
         object-fit: cover;
         border-radius: 50%;
     }
-    
+
     .online_round {
         position: absolute;
         width: 15px;
         border: 3px solid #fff;
         height: 15px;
-        background-color: #BBCFAE;
+        background-color: #bbcfae;
         border-radius: 50%;
         bottom: 0;
         right: 5px;
     }
 }
-

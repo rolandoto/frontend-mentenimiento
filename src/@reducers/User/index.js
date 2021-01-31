@@ -27,3 +27,21 @@ export const AuthReducer = (status = {}, action) => {
             return status;
     }
 };
+
+export const AuthMachineReducer = (status = {}, action) => {
+    switch (action.type) {
+        case UserTypes.LOGINMACHINE_REQUEST:
+            return {
+                loading: true,
+            };
+        case UserTypes.LOGINMACHINE_SUCCESS:
+            return {
+                status: action.response.access,
+                token: action.response.token,
+                user: action.response.user,
+                message: action.response.message,
+            };
+        default:
+            return status;
+    }
+};

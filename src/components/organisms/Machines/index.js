@@ -28,7 +28,7 @@ export const MachinesList = ({ machines = [] }) => {
     };
 
     const onDetailPressed = (item) => {
-        dispatch(modalActions.showModalDetail("AddMachineComponent" , item));
+        dispatch(modalActions.showModalDetail("MachineDetails", item));
     };
 
     return (
@@ -40,6 +40,7 @@ export const MachinesList = ({ machines = [] }) => {
                 keys={keys}
                 onDelete={onDeleteHandle}
                 details={onDetailPressed}
+                visibility={"machineUse/"}
             />
         </Container>
     );

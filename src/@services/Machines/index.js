@@ -6,7 +6,21 @@ export const machineService = {
     getMachines,
     updateMachine,
     deleteMachine,
+    getMachineNoAuth,
+    registerMachineUse,
 };
+
+function getMachineNoAuth(_id) {
+    const configuration = {
+        method: "get",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        url: process.env.REACT_APP_API + "machine/getMachineNoAuth/" + _id,
+    };
+
+    return axios.request(configuration);
+}
 
 function getMachines() {
     const configuration = {
@@ -28,6 +42,19 @@ function createMachine(data) {
         },
         data,
         url: process.env.REACT_APP_API + "machine/createMachine",
+    };
+
+    return axios.request(configuration);
+}
+
+function registerMachineUse(data) {
+    const configuration = {
+        method: "post",
+        headers: {
+            Authorization: data.token,
+        },
+        data,
+        url: process.env.REACT_APP_API + "machine/registerMachineUse",
     };
 
     return axios.request(configuration);

@@ -7,7 +7,9 @@ import {
     Edit,
     Delete,
     Apps,
+    Visibility,
 } from "@material-ui/icons";
+import { history } from "../../../helpers";
 
 const ListContainer = ({ children }) => {
     return children;
@@ -26,7 +28,15 @@ const ListHeader = ({ items = [] }) => (
     </ul>
 );
 
-const ListItems = ({ items = [], EditC, showKeys = [], onDelete, details }) => {
+const ListItems = ({
+    items = [],
+    EditC,
+    showKeys = [],
+    onDelete,
+    details,
+    visibility,
+    rows,
+}) => {
     const [edit, setEdit] = useState("");
     const evalueEdit = (item) => {
         if (item._id === edit) {
@@ -44,25 +54,45 @@ const ListItems = ({ items = [], EditC, showKeys = [], onDelete, details }) => {
                     <li
                         className="list_item"
                         style={{
-                            gridTemplateColumns: `repeat(3, 1fr)`,
+                            gridTemplateColumns: `repeat(${rows}, 1fr)`,
                         }}
                     >
-                        {showKeys.map((k, i) => (
-                            <p key={i}>{item[k]}</p>
-                        ))}
+                        {showKeys.map((k, i) => {
+                            if (k !== "complete") {
+                                return <p key={i}>{item[k]}</p>;
+                            } else {
+                                return (
+                                    <p key={i}>
+                                        {item[k] ? "Completado" : "En curso"}
+                                    </p>
+                                );
+                            }
+                        })}
                         <div className="item_actions">
-                            <div
-                                className="item_edit_trigger edit_item"
-                                onClick={() => evalueEdit(item)}
-                            >
-                                <Edit />
-                            </div>
+                            {EditC && (
+                                <div
+                                    className="item_edit_trigger edit_item"
+                                    onClick={() => evalueEdit(item)}
+                                >
+                                    <Edit />
+                                </div>
+                            )}
                             {details && (
                                 <div
                                     className="item_edit_trigger show_item"
                                     onClick={() => details(item)}
                                 >
                                     <Apps />
+                                </div>
+                            )}
+                            {visibility && (
+                                <div
+                                    className="item_edit_trigger status_item"
+                                    onClick={() =>
+                                        history.push(visibility + item._id)
+                                    }
+                                >
+                                    <Visibility />
                                 </div>
                             )}
                             <div
@@ -73,7 +103,7 @@ const ListItems = ({ items = [], EditC, showKeys = [], onDelete, details }) => {
                             </div>
                         </div>
                     </li>
-                    {edit === item._id && <EditC edit={item} />}
+                    {EditC && edit === item._id && <EditC edit={item} />}
                 </div>
             ))}
         </ul>
@@ -87,6 +117,8 @@ export const List = ({
     keys = [],
     onDelete,
     details,
+    visibility,
+    totalRows = 3,
 }) => {
     const [itemsPerView, setItemsPerView] = useState(6);
     const [showItems, setShowItems] = useState([]);
@@ -152,6 +184,8 @@ export const List = ({
                     showKeys={keys}
                     onDelete={onDelete}
                     details={details}
+                    visibility={visibility}
+                    rows={totalRows}
                 />
             </div>
         </ListContainer>

@@ -1,7 +1,8 @@
 import React from "react";
-import { Dropdown, Search } from "../../molecules";
+import { Dropdown, Search, Notifications } from "../../molecules";
 import { Text } from "../../atoms";
-import { Notifications , Textsms} from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import { Textsms } from "@material-ui/icons";
 import "./navbar.scss";
 
 export const Navbar = (_) => {
@@ -25,9 +26,14 @@ export const Navbar = (_) => {
                 </div>
                 <Search background_dark />
                 <div className="action_section">
-                    <Notifications className="icon_space_right" />
-                    <Textsms className="icon_space_right" />
-                    <Dropdown image username  />
+                    <Notifications />
+                    <Dropdown Icon={Textsms} extraClass="icon_space_right" />
+
+                    <Dropdown image username logoutAction>
+                        <li>
+                            <Link to="/profile">Perfil</Link>
+                        </li>
+                    </Dropdown>
                 </div>
             </div>
         </nav>

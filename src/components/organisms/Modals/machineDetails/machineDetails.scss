@@ -1,0 +1,76 @@
+@import "../../../../vars";
+
+.QR_Download_container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.list_item_detail {
+    @include custom_center("row", center, flex-start);
+    padding: 10px 20px;
+    position: relative;
+
+    p:first-child {
+        font-size: 1em;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    p:last-child {
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+
+    .complete_check {
+        @include absolute_center();
+        border: 1px solid $success-color;
+        position: absolute;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        transition: 0.5s all;
+        cursor: pointer;
+
+        svg {
+            fill: $success-color;
+        }
+
+        &:hover {
+            background-color: $success-color;
+
+            svg {
+                fill: #fff;
+            }
+        }
+    }
+}
+
+.main_container_detail_grid {
+    display: grid;
+    grid-template-areas:
+        "charts charts charts"
+        "uses maintenances spare_parts"
+        "uses maintenances spare_parts";
+    width: 100%;
+    padding: 30px 20px;
+    height: 100vh;
+    grid-gap: 20px;
+
+    .chart_section {
+        grid-area: charts;
+    }
+
+    .uses_section {
+        grid-area: uses;
+    }
+
+    .maintenances_section {
+        grid-area: maintenances;
+    }
+
+    .spare_parts_section {
+        grid-area: spare_parts;
+    }
+}

@@ -17,7 +17,7 @@ export const LoginTemplate = (_) => {
                 if (trackWidth.current) {
                     setTrack(trackWidth.current.scrollWidth);
                 } else {
-                    window.removeEventListener("resize" , _ => false)
+                    window.removeEventListener("resize", (_) => false);
                 }
             });
         },

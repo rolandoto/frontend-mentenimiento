@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import cx from 'classnames';
+import cx from "classnames";
 import "./input.scss";
 
 export const Input = ({
@@ -12,6 +12,7 @@ export const Input = ({
     max = min + 1,
     height,
     defaultValue = "",
+    readonly,
     ...rest
 }) => {
     const textRef = useRef();
@@ -101,8 +102,10 @@ export const Input = ({
 
     return (
         <div
-            className={cx(errors ? "input_item error_margin" : "input_item",
-            type === "hidden" ? "hide_element" : "")}
+            className={cx(
+                errors ? "input_item error_margin" : "input_item",
+                type === "hidden" ? "hide_element" : ""
+            )}
             style={{ height: height }}
         >
             {animated && (
@@ -125,6 +128,7 @@ export const Input = ({
                 className: errors ? "errorInput" : "",
                 ...rest,
                 value: inputValue,
+                readOnly: readonly ? true : null,
                 min: type === "number" ? 0 : null,
                 max: type === "number" && max ? max : null,
                 onClick: () => evaluateInput(),

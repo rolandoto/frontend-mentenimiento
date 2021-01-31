@@ -21,7 +21,6 @@
     }
 }
 
-
 .list_item {
     display: grid;
     align-items: center;
@@ -40,7 +39,7 @@
                 }
             }
         }
-        
+
         .show_item {
             &:hover {
                 svg {
@@ -48,7 +47,15 @@
                 }
             }
         }
-        
+
+        .status_item {
+            &:hover {
+                svg {
+                    fill: $secondary;
+                }
+            }
+        }
+
         .delete_item {
             &:hover {
                 svg {

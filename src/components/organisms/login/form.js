@@ -1,8 +1,8 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from "../../../@actions";
 import { Input, Button } from "../../atoms";
-import './form.scss'
+import "./form.scss";
 
 export function LoginForm() {
     const [errors, setErrors] = useState([]);
@@ -51,7 +51,11 @@ export function LoginForm() {
                 animated
                 required
             />
-            <Button text="Login" variant="secondary btn-big" style={{height: 50}} />
+            <Button
+                text="Login"
+                variant="secondary btn-big"
+                style={{ height: 50 }}
+            />
             {authState.status === false && authState.error === "general" && (
                 <div className="error_message">
                     <span>{authState.message}</span>

@@ -9,6 +9,7 @@ export const UserActions = {
     authenticate,
     logout,
     updateUser,
+    authenticateMachineUserLogin,
 };
 
 function login(user) {
@@ -55,6 +56,44 @@ function login(user) {
     function failure(response) {
         return { type: UserTypes.LOGIN_FAILURE, response };
     }
+}
+
+function authenticateMachineUserLogin(user) {
+    return (dispatch) => {
+        UserService.login(user)
+            .then((response) => {
+                if (response.data.access) {
+                    dispatch(
+                        callback(UserTypes.LOGINMACHINE_SUCCESS, response.data)
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: response.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, por favor intentalo nuevamente.",
+                        })
+                    );
+                }
+            });
+    };
 }
 
 function logout(_id) {

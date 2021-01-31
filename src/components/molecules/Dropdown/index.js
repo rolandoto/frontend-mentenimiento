@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Text } from "../../atoms";
 import { ArrowDropDown } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import cx from "classnames";
 import { UserActions } from "../../../@actions";
 import "./dropdown.scss";
 
 export const Dropdown = ({
+    children,
     image = false,
     username = false,
     click = false,
+    Icon,
+    extraClass,
+    logoutAction,
+    circleRed,
+    width,
 }) => {
     const [isActive, setIsActive] = useState(false);
     const user = useSelector((state) => state.AuthReducer);
@@ -32,7 +38,9 @@ export const Dropdown = ({
     };
 
     return (
-        <Parent className="trigger_dropdown">
+        <Parent
+            className={cx("trigger_dropdown", extraClass ? extraClass : "")}
+        >
             {image && <Avatar size={30} />}
             {username && user.status && (
                 <Text
@@ -43,16 +51,32 @@ export const Dropdown = ({
                     text={user.user.name}
                 />
             )}
-            <ArrowDropDown />
 
-            <ul className="dropdown">
-                <li>
-                    <Link to="/profile">Perfil</Link>
-                </li>
-                <div className="rule"></div>
-                <li onClick={() => logout()}>
-                    <div>Cerrar sesión</div>
-                </li>
+            {!Icon && <ArrowDropDown />}
+            {Icon && (
+                <div className="circle_red_icon">
+                    <div className="icon_section_item">
+                        {circleRed && (
+                            <div className="circle_red_notification"></div>
+                        )}
+                        <Icon />
+                    </div>
+                </div>
+            )}
+
+            <ul className="dropdown" style={{ width: width }}>
+                {children}
+                {logoutAction && (
+                    <>
+                        <div className="rule"></div>
+                        <li
+                            onClick={() => logout()}
+                            className="list_dropdown_item"
+                        >
+                            <div>Cerrar sesión</div>
+                        </li>
+                    </>
+                )}
             </ul>
         </Parent>
     );
