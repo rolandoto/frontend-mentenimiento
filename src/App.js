@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { PrivateRoute, cookieHelper } from "./helpers";
+import { PrivateRoute, cookieHelper, socket } from "./helpers";
 import { UserActions } from "./@actions";
 import { Modal, ModalDetails } from "./layouts";
 import { Alert } from "./components/organisms";
@@ -14,11 +14,18 @@ import {
     MachineUse,
     NotFoundPage,
     Maintenances,
+    SpareParts,
 } from "./pages";
 
 export const App = (_) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.AuthReducer);
+
+    useEffect((_) => {
+        socket.on("newMachineSaved", (data) => {
+            console.log(data);
+        });
+    }, []);
 
     useEffect(
         (_) => {
@@ -46,6 +53,7 @@ export const App = (_) => {
                 />
                 <PrivateRoute exact path="/profile" component={Profile} />
                 <PrivateRoute exact path="/machines" component={Machines} />
+                <PrivateRoute exact path="/spareParts" component={SpareParts} />
                 <PrivateRoute
                     exact
                     path="/maintenances"

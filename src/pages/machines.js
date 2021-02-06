@@ -10,11 +10,20 @@ export const Machines = (_) => {
 
     useEffect(
         (_) => {
-            dispatch(environmentActions.getEnvironments());
+            if (!environments.status) {
+                dispatch(environmentActions.getEnvironments());
+            }
+        },
+        [dispatch, environments.status]
+    );
+
+    useEffect(
+        (_) => {
             dispatch(machineActions.getMachines());
         },
         [dispatch]
     );
+
     return (
         <MachinesTemplate
             machines={machines.status ? machines.machines : []}

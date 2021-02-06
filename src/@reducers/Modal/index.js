@@ -6,6 +6,7 @@ export const ModalReducer = (state = {}, action) => {
             return {
                 show: true,
                 component: action.component,
+                item: action.item,
             };
         case ModalTypes.HIDE_MODAL:
             return {};

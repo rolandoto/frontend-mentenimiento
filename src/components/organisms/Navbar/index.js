@@ -2,7 +2,6 @@ import React from "react";
 import { Dropdown, Search, Notifications } from "../../molecules";
 import { Text } from "../../atoms";
 import { Link } from "react-router-dom";
-import { Textsms } from "@material-ui/icons";
 import "./navbar.scss";
 
 export const Navbar = (_) => {
@@ -11,7 +10,7 @@ export const Navbar = (_) => {
             <div className="container navbar">
                 <div className="brand">
                     <img
-                        src="/img/logo.png"
+                        src="/img/logoSena.png"
                         alt="main logo"
                         className="responsive_image"
                     />
@@ -27,8 +26,7 @@ export const Navbar = (_) => {
                 <Search background_dark />
                 <div className="action_section">
                     <Notifications />
-                    <Dropdown Icon={Textsms} extraClass="icon_space_right" />
-
+                    
                     <Dropdown image username logoutAction>
                         <li>
                             <Link to="/profile">Perfil</Link>

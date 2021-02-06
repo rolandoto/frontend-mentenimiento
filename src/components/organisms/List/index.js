@@ -8,6 +8,7 @@ import {
     Delete,
     Apps,
     Visibility,
+    Category,
 } from "@material-ui/icons";
 import { history } from "../../../helpers";
 
@@ -36,6 +37,7 @@ const ListItems = ({
     details,
     visibility,
     rows,
+    assignSparePart,
 }) => {
     const [edit, setEdit] = useState("");
     const evalueEdit = (item) => {
@@ -85,6 +87,14 @@ const ListItems = ({
                                     <Apps />
                                 </div>
                             )}
+                            {assignSparePart && (
+                                <div
+                                    className="item_edit_trigger show_item"
+                                    onClick={() => assignSparePart(item)}
+                                >
+                                    <Category />
+                                </div>
+                            )}
                             {visibility && (
                                 <div
                                     className="item_edit_trigger status_item"
@@ -95,12 +105,14 @@ const ListItems = ({
                                     <Visibility />
                                 </div>
                             )}
-                            <div
-                                className="item_edit_trigger delete_item"
-                                onClick={() => onDelete(item)}
-                            >
-                                <Delete />
-                            </div>
+                            {onDelete && (
+                                <div
+                                    className="item_edit_trigger delete_item"
+                                    onClick={() => onDelete(item)}
+                                >
+                                    <Delete />
+                                </div>
+                            )}
                         </div>
                     </li>
                     {EditC && edit === item._id && <EditC edit={item} />}
@@ -119,6 +131,7 @@ export const List = ({
     details,
     visibility,
     totalRows = 3,
+    assignSparePart,
 }) => {
     const [itemsPerView, setItemsPerView] = useState(6);
     const [showItems, setShowItems] = useState([]);
@@ -186,6 +199,7 @@ export const List = ({
                     details={details}
                     visibility={visibility}
                     rows={totalRows}
+                    assignSparePart={assignSparePart}
                 />
             </div>
         </ListContainer>

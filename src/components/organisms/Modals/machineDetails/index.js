@@ -15,6 +15,7 @@ export const MachineDetails = (_) => {
     const machines = useSelector((state) => state.MachineAllReducer);
     const machineData = { ...machine.item };
     const [maintenances, setMaintenances] = useState([]);
+    const [spareParts, setSpareParts] = useState([]);
 
     const downloadQR = (_) => {
         const getQR = document.getElementById("QRCodeGenerated");
@@ -56,6 +57,23 @@ export const MachineDetails = (_) => {
         [machines, machine.item.maintenances]
     );
 
+    useEffect(
+        (_) => {
+            const spareParts = machine.item.spareParts.map((sparePart) => {
+                const createAt = Moment(sparePart.sparePart.create_at)
+                    .locale("es")
+                    .format("LL");
+                return {
+                    ...sparePart.sparePart,
+                    stockUsed: sparePart.stockUsed,
+                    createAt,
+                };
+            });
+            setSpareParts(spareParts);
+        },
+        [machines, machine.item.spareParts]
+    );
+
     const onCompleteCheck = (item) => {
         if (item._id) {
             dispatch(maintenanceActions.completeMaitenance(item._id));
@@ -73,15 +91,15 @@ export const MachineDetails = (_) => {
         <div className="rows">
             <div className="col10">
                 <div className="main_container_detail_grid">
-                    <div className="chart_section">
-                        <Text type="h2" text="Gráficas" />
-                    </div>
                     <div className="uses_section">
                         <Text type="h2" text="Reportes usos" />
                         <ListDetail
                             items={convertMachineUserDetails}
                             keysToShow={["user", "note", "create_at"]}
                         />
+                        {convertMachineUserDetails.length === 0 && (
+                            <Text type="p" text="No hay reportes" />
+                        )}
                     </div>
                     <div className="maintenances_section">
                         <Text type="h2" text="Mantenimientos" />
@@ -90,10 +108,19 @@ export const MachineDetails = (_) => {
                             keysToShow={["maintenanceTypeName", "create_at"]}
                             complete={onCompleteCheck}
                         />
+                        {maintenances.length === 0 && (
+                            <Text type="p" text="No hay mantenimientos" />
+                        )}
                     </div>
                     <div className="spare_parts_section">
-                        <Text type="h2" text="Repuestos" />
-                        <ListDetail items={[]} keysToShow={[]} />
+                        <Text type="h2" text="Repuestos usados" />
+                        <ListDetail
+                            items={spareParts}
+                            keysToShow={["name", "stockUsed", "createAt"]}
+                        />
+                        {spareParts.length === 0 && (
+                            <Text type="p" text="No se han usado repuestos." />
+                        )}
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import { ModalReducer, ModalDetailReducer } from "./Modal";
 import { AlertReducer } from "./Alert";
 import { EnvironmentsAllReducer } from "./Environments";
 import { MachineAllReducer, MachineOneReducer } from "./Machine";
+import { SparePartsAllReducer } from "./SpareParts";
 import { MaitenanceTypesReducer, MaitenancesAllReducer } from "./Maintenance";
 import { notificationAllReducer } from "./Notification";
 import { UserTypes } from "../@types";
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     AuthMachineReducer,
     MaitenanceTypesReducer,
     MaitenancesAllReducer,
+    SparePartsAllReducer,
 });
 
 const evalueReducer = (state, action) =>

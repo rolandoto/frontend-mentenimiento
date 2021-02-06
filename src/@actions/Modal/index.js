@@ -7,11 +7,12 @@ export const modalActions = {
     closeModalDetail,
 };
 
-function showModal(type) {
+function showModal(type , item) {
     return (dispatch) => {
         dispatch({
             type: ModalTypes.SHOW_MODAL,
             component: type,
+            item
         });
     };
 }

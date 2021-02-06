@@ -9,9 +9,11 @@ export const Environments = (_) => {
 
     useEffect(
         (_) => {
-            dispatch(environmentActions.getEnvironments());
+            if (!environments.status) {
+                dispatch(environmentActions.getEnvironments());
+            }
         },
-        [dispatch]
+        [dispatch, environments.status]
     );
 
     return (

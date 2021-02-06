@@ -6,6 +6,6 @@ import logger from "redux-logger";
 const middlewares =
     process.env.NODE_ENV === "production"
         ? applyMiddleware(thunk)
-        : applyMiddleware(thunk, logger);
+        : applyMiddleware(thunk , logger);
 
 export const store = createStore(rootReducer, middlewares);

@@ -9,15 +9,35 @@ export const Maintenances = (_) => {
         (state) => state.MaitenanceTypesReducer
     );
     const maintenances = useSelector((state) => state.MaitenancesAllReducer);
+    const machines = useSelector((state) => state.MachineAllReducer);
 
     useEffect(
         (_) => {
-            dispatch(maintenanceActions.getMaitenanceTypes());
-            dispatch(maintenanceActions.getMaitenances());
-            dispatch(machineActions.getMachines());
+            if (!maitenanceTypes.status) {
+                dispatch(maintenanceActions.getMaitenanceTypes());
+            }
         },
-        [dispatch]
+        [dispatch, maitenanceTypes.status]
     );
+
+    useEffect(
+        (_) => {
+            if (!maintenances.status) {
+                dispatch(maintenanceActions.getMaitenances());
+            }
+        },
+        [dispatch, maintenances.status]
+    );
+
+    useEffect(
+        (_) => {
+            if (!machines.status) {
+                dispatch(machineActions.getMachines());
+            }
+        },
+        [dispatch, machines.status]
+    );
+
     return (
         <MaintenanceTemplate
             maintenances={maintenances.status ? maintenances.maintenances : []}

@@ -31,7 +31,7 @@ export const LoginTemplate = (_) => {
                     <Text
                         type="h2"
                         text="Bienvenido de nuevo"
-                        color="#5b83d7"
+                        color="#FF6719"
                         weight="600"
                         size={30}
                     />

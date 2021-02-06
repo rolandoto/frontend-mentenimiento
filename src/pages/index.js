@@ -5,4 +5,5 @@ export * from "./machines";
 export * from "./profile";
 export * from "./machineUse";
 export * from "./404";
+export * from "./spareParts";
 export * from "./maintenances";

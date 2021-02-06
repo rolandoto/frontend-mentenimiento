@@ -42,7 +42,14 @@ export const ListDetail = ({ items = [], keysToShow = [], complete }) => {
                         key={index}
                     >
                         {keysToShow.map((key, i) => {
-                            return <p key={i}>{item[key]}</p>;
+                            return (
+                                <p key={i}>
+                                    {key === "stockUsed" && (
+                                        <span>Cantidad usada: </span>
+                                    )}
+                                    {item[key]}
+                                </p>
+                            );
                         })}
                         {item.complete === false && (
                             <div

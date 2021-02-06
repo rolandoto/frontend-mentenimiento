@@ -132,6 +132,10 @@ body {
     height: 20px;
 }
 
+.align_vertical {
+    @include custom_center(column, none, center);
+}
+
 .no_padding {
     padding: 0;
 }
@@ -153,7 +157,7 @@ body {
 }
 
 .col4 {
-    width: 28%;
+    width: 30%;
 }
 
 .col5 {

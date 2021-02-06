@@ -50,7 +50,6 @@
 .main_container_detail_grid {
     display: grid;
     grid-template-areas:
-        "charts charts charts"
         "uses maintenances spare_parts"
         "uses maintenances spare_parts";
     width: 100%;
