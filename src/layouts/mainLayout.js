@@ -4,7 +4,6 @@ import { Link } from "../components/atoms";
 import {
     Home,
     SupervisorAccount,
-    Settings,
     Build,
     Folder,
     Category,
@@ -61,12 +60,6 @@ export const MainLayout = ({ children }) => {
                             path="/reports"
                             text="Reportes"
                             Icon={Folder}
-                            organized
-                        />
-                        <Link
-                            path="/setting"
-                            text="Ajustes"
-                            Icon={Settings}
                             organized
                         />
                     </Sidebar>

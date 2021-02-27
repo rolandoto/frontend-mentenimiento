@@ -26,10 +26,22 @@ export const Navbar = (_) => {
                 <Search background_dark />
                 <div className="action_section">
                     <Notifications />
-                    
+
                     <Dropdown image username logoutAction>
                         <li>
                             <Link to="/profile">Perfil</Link>
+                        </li>
+                        <li>
+                            <Link to="/environments">Ambientes</Link>
+                        </li>
+                        <li>
+                            <Link to="/machines">Maquinas</Link>
+                        </li>
+                        <li>
+                            <Link to="/spareParts">Repuestos</Link>
+                        </li>
+                        <li>
+                            <Link to="/maintenances">Mantenimientos</Link>
                         </li>
                     </Dropdown>
                 </div>
