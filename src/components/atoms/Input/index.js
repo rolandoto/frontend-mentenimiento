@@ -13,6 +13,7 @@ export const Input = ({
     height,
     defaultValue = "",
     readonly,
+    onChange,
     ...rest
 }) => {
     const textRef = useRef();
@@ -41,6 +42,9 @@ export const Input = ({
     };
 
     const changeValue = (e) => {
+        if (onChange) {
+            onChange(e);
+        }
         setInputValue(e.target.value);
     };
 

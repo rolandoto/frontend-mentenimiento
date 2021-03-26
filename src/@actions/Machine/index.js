@@ -9,6 +9,7 @@ export const machineActions = {
     updateMachine,
     deleteMachine,
     registerMachineUse,
+    updatePreconfiguredMaitenances
 };
 
 function getMachines() {
@@ -192,6 +193,56 @@ function updateMachine(data) {
 
         machineService
             .updateMachine(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINES_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function updatePreconfiguredMaitenances(data) {
+    return (dispatch) => {
+        dispatch(request(MachinesTypes.UPDATEMACHINEMAITENANCES_REQUEST));
+
+        machineService
+            .updatePreconfiguredMaitenances(data)
             .then((res) => {
                 if (res.data.status) {
                     dispatch(

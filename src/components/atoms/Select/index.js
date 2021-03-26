@@ -16,8 +16,9 @@ export const Select = ({
     children,
     identifier = "",
     placeholder = "",
-    heigth,
+    height,
     defaultSelected = "",
+    onChange,
 }) => {
     const selectRef = useRef();
     const [selectedOption, setSelectedOption] = useState(defaultSelected);
@@ -52,6 +53,15 @@ export const Select = ({
         [defaultSelected, children]
     );
 
+    useEffect(
+        (_) => {
+            if (onChange) {
+                onChange(selectRef.current.value);
+            }
+        },
+        [selectedOption , onChange]
+    );
+
     return (
         <div className="select_container">
             <select
@@ -69,7 +79,7 @@ export const Select = ({
 
             <div
                 className="select_component"
-                style={{ height: heigth }}
+                style={{ height: height }}
                 onClick={() => setShowOptions(!showOptions)}
             >
                 <span>{selectedOptionPlaceholder}</span>
@@ -83,7 +93,7 @@ export const Select = ({
                             <div
                                 key={option.value}
                                 className="select_option_item"
-                                onClick={() => [
+                                onClick={(e) => [
                                     setSelectedOption(option.value),
                                     setSelectedOptionPlaceholder(option.text),
                                     setShowOptions(false),

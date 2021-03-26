@@ -9,11 +9,11 @@ export const MaintenancesList = ({ items = [], tab }) => {
     const dispatch = useDispatch();
     const listHeader =
         tab === "maintenances"
-            ? ["Nombre del mantenimiento", "Código de la maquina", "Estado", ""]
+            ? ["Nombre del mantenimiento", "Estado", ""]
             : ["Identificador", "Nombre", ""];
     const keys =
         tab === "maintenances"
-            ? ["maintenanceTypeName", "machineCode", "complete"]
+            ? ["maintenanceTypeName", "complete"]
             : ["_id", "name"];
 
     const onDeleteMaitenance = (data) => {
@@ -64,7 +64,7 @@ export const MaintenancesList = ({ items = [], tab }) => {
                         ? onDeleteMaitenance
                         : onDeleteMaitenanceType
                 }
-                totalRows={tab === "maintenances" ? 4 : 3}
+                totalRows={tab === "maintenances" ? 3 : 3}
             />
         </Container>
     );

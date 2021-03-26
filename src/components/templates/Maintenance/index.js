@@ -24,7 +24,6 @@ export const MaintenanceTemplate = ({
     const MaitenanceData = maintenances.map((maitenance) => {
         return {
             ...maitenance,
-            machineCode: maitenance.machine.machineCode,
             maintenanceTypeName: maitenance.maintenanceType.name,
         };
     });

@@ -3,6 +3,7 @@ export * from "./User";
 export * from "./Modal";
 export * from "./Environment";
 export * from "./Machine";
+export * from "./MachineType";
 export * from "./SpareParts";
 export * from "./Maitenance";
 export * from "./Notification";

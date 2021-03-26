@@ -184,6 +184,10 @@ body {
     width: 85%;
 }
 
+.col12 {
+    width: 100%;
+}
+
 .center_margin {
     margin: 0 auto;
 }
@@ -196,12 +200,28 @@ body {
     display: none !important;
 }
 
+.direction_row {
+    flex-direction: row;
+}
+
+.flex-start {
+    justify-content: flex-start !important;
+}
+
+.mnh-25 {
+    min-height: 25px;
+}
+
 form {
     width: 100%;
 }
 
 .center_elements {
     @include center_horizontal();
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 800px) {

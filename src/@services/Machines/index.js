@@ -8,6 +8,7 @@ export const machineService = {
     deleteMachine,
     getMachineNoAuth,
     registerMachineUse,
+    updatePreconfiguredMaitenances,
 };
 
 function getMachineNoAuth(_id) {
@@ -70,6 +71,21 @@ function updateMachine(data) {
         url: process.env.REACT_APP_API + "machine/updateMachine",
     };
 
+    return axios.request(configuration);
+}
+
+function updatePreconfiguredMaitenances(data) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data,
+        url:
+            process.env.REACT_APP_API +
+            "machine/updatePreconfiguredMaitenances",
+    };
+    
     return axios.request(configuration);
 }
 

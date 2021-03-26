@@ -73,3 +73,47 @@
         grid-area: spare_parts;
     }
 }
+
+.custom_header_triggers {
+    display: flex;
+    padding: 10px 40px;
+
+    .custom_header_trigger_item {
+        cursor: pointer;
+        margin-right: 10px;
+        transition: 0.5s all;
+        border: 1px solid #e6e6e6;
+        padding: 10px;
+
+        &:hover {
+            background-color: $secondary;
+            color: #fff;
+            border-color: $secondary;
+        }
+    }
+
+    .active {
+        background-color: $secondary;
+        color: #fff;
+        border-color: $secondary;
+    }
+}
+
+.custom_registered_hours {
+    padding: 10px 0;
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+
+    .hours_display {
+        font-size: 1.8em;
+        margin-left: 6px;
+    }
+}
+
+.container_content_modal {
+    padding: 20px;
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+}

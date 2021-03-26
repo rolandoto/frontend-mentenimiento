@@ -1,0 +1,15 @@
+@import '../../../../vars.scss';
+
+.custom_add_maitenance {
+    @include absolute_center();
+    width: 25px;
+    height: 25px;
+    background-color: $secondary;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+
+    svg {
+        color: #fff;
+    }
+}

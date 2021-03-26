@@ -14,6 +14,11 @@ export const MachineUse = (_) => {
         three: 3,
     };
 
+    const stepTypes = {
+        use: 1,
+        error: 2,
+    };
+
     const dispatch = useDispatch();
     const { id } = useParams();
     const machine = useSelector((state) => state.MachineOneReducer);
@@ -21,6 +26,7 @@ export const MachineUse = (_) => {
     const userGuest = useSelector((state) => state.AuthMachineReducer);
     const [user, setUser] = useState(userLogged ? userLogged : userGuest);
     const [step, setStep] = useState(steps.one);
+    const [stepType, setStepType] = useState(stepTypes.use);
 
     useEffect(
         (_) => {
@@ -120,14 +126,29 @@ export const MachineUse = (_) => {
                             <span>{machine.status}</span>
                         </div>
 
-                        {machine.machine.status === "active" && (
+                        <div className="rows">
+                            {machine.machine.status === "active" && (
+                                <button
+                                    className="btn_return"
+                                    onClick={() => [
+                                        setStep(steps.two),
+                                        setStepType(stepTypes.use),
+                                    ]}
+                                    style={{ marginRight: 20 }}
+                                >
+                                    Reportar uso
+                                </button>
+                            )}
                             <button
                                 className="btn_return"
-                                onClick={() => setStep(steps.two)}
+                                onClick={() => [
+                                    setStep(steps.two),
+                                    setStepType(stepTypes.error),
+                                ]}
                             >
-                                Reportar uso
+                                Reportar error
                             </button>
-                        )}
+                        </div>
                     </div>
                 )}
                 {step === steps.two && !user.status && (
@@ -163,45 +184,86 @@ export const MachineUse = (_) => {
                         </form>
                     </div>
                 )}
-                {user.status && step !== steps.one && (
-                    <div className="center_absolute login_container">
-                        <form method="POST" onSubmit={eHandleSubmitUse}>
-                            <div
-                                className="back_to_step center_absolute"
-                                onClick={() => setStep(steps.one)}
-                            >
-                                <ArrowBack />
-                            </div>
-                            <Text
-                                type="h2"
-                                text={"Bienvenido " + user.user.name}
-                            />
-                            <Input
-                                type="text"
-                                animated
-                                identifier="machineCode"
-                                placeholder="Codigo de la maquina"
-                                min={1}
-                                max={100}
-                                defaultValue={machine.machine.machineCode}
-                                readonly
-                            />
-                            <Input
-                                type="number"
-                                animated
-                                identifier="hours"
-                                placeholder="Horas de uso"
-                                min={1}
-                                max={100}
-                            />
-                            <TextArea placeholder="Notas" identifier="notes" />
-                            <Button
-                                text="Reportar uso"
-                                variant="secondary btn-big"
-                            />
-                        </form>
-                    </div>
-                )}
+                {user.status &&
+                    step !== steps.one &&
+                    stepType === stepTypes.use && (
+                        <div className="center_absolute login_container">
+                            <form method="POST" onSubmit={eHandleSubmitUse}>
+                                <div
+                                    className="back_to_step center_absolute"
+                                    onClick={() => setStep(steps.one)}
+                                >
+                                    <ArrowBack />
+                                </div>
+                                <Text
+                                    type="h2"
+                                    text={"Bienvenido " + user.user.name}
+                                />
+                                <Input
+                                    type="text"
+                                    animated
+                                    identifier="machineCode"
+                                    placeholder="Codigo de la maquina"
+                                    min={1}
+                                    max={100}
+                                    defaultValue={machine.machine.machineCode}
+                                    readonly
+                                />
+                                <Input
+                                    type="number"
+                                    animated
+                                    identifier="hours"
+                                    placeholder="Horas de uso"
+                                    min={1}
+                                    max={100}
+                                />
+                                <TextArea
+                                    placeholder="Notas"
+                                    identifier="notes"
+                                />
+                                <Button
+                                    text="Reportar uso"
+                                    variant="secondary btn-big"
+                                />
+                            </form>
+                        </div>
+                    )}
+                {user.status &&
+                    step !== steps.one &&
+                    stepType === stepTypes.error && (
+                        <div className="center_absolute login_container">
+                            <form method="POST" onSubmit={eHandleSubmitUse}>
+                                <div
+                                    className="back_to_step center_absolute"
+                                    onClick={() => setStep(steps.one)}
+                                >
+                                    <ArrowBack />
+                                </div>
+                                <Text
+                                    type="h2"
+                                    text={"Bienvenido " + user.user.name}
+                                />
+                                <Input
+                                    type="text"
+                                    animated
+                                    identifier="machineCode"
+                                    placeholder="Codigo de la maquina"
+                                    min={1}
+                                    max={100}
+                                    defaultValue={machine.machine.machineCode}
+                                    readonly
+                                />
+                                <TextArea
+                                    placeholder="Reportar fallo"
+                                    identifier="machine_error"
+                                />
+                                <Button
+                                    text="Reportar"
+                                    variant="secondary btn-big"
+                                />
+                            </form>
+                        </div>
+                    )}
             </div>
         );
     } else {

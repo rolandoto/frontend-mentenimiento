@@ -24,6 +24,7 @@ export const AddEnvironmentComponent = ({ edit }) => {
                     environmentID: e.target.environmentID.value,
                     environmentCode: e.target.environmentCode.value,
                     name: e.target.name.value,
+                    in_charge: e.target.in_charge.value,
                 };
 
                 dispatch(environmentActions.updateEnvironment(environment));
@@ -94,6 +95,16 @@ export const AddEnvironmentComponent = ({ edit }) => {
                         max={50}
                         height={50}
                         defaultValue={edit ? edit.name : ""}
+                        animated
+                    />
+                    <Input
+                        identifier="in_charge"
+                        type="text"
+                        placeholder="Encargado"
+                        min={5}
+                        max={50}
+                        height={50}
+                        defaultValue={edit ? edit.in_charge : ""}
                         animated
                     />
                 </div>

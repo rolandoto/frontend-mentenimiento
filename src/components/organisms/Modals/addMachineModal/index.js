@@ -13,6 +13,7 @@ import {
 export const AddMachineComponent = ({ edit }) => {
     const dispatch = useDispatch();
     const environmnets = useSelector((state) => state.EnvironmentsAllReducer);
+    const machineTypeReducer = useSelector((state) => state.MachineTypesReducer);
 
     const eHandleSubmit = (e) => {
         e.preventDefault();
@@ -30,13 +31,18 @@ export const AddMachineComponent = ({ edit }) => {
             } else {
                 const machine = {
                     machineID: e.target.machineID.value,
+                    machineType: e.target.machineType.value,
                     environmentID: e.target.environmentID.value,
                     machineCode: e.target.machineCode.value,
                     name: e.target.name.value,
-                    totalHoursToMaintenance:
-                        e.target.totalHoursToMaintenance.value,
+                    model: e.target.model.value,
+                    adquisiton_year: e.target.adquisiton_year.value,
+                    voltage: e.target.voltage.value,
+                    brand: e.target.brand.value,
+                    stream: e.target.stream.value,
+                    watts: e.target.watts.value,
                 };
-
+                
                 if (!edit) {
                     machine.totalHoursRegisted =
                         e.target.totalHoursRegisted.value;
@@ -108,6 +114,23 @@ export const AddMachineComponent = ({ edit }) => {
                             ))}
                     </Select>
 
+                    <Select
+                        identifier="machineType"
+                        placeholder="Tipo de maquina"
+                        heigth={50}
+                        defaultSelected={edit ? edit.machineType : ""}
+                    >
+                        {machineTypeReducer.status &&
+                            machineTypeReducer.machineTypes.map((machineType) => (
+                                <Option
+                                    key={machineType._id}
+                                    value={machineType._id}
+                                    text={machineType.machine_type_name}
+                                />
+                            ))}
+                    </Select>
+
+
                     <div className="rows">
                         <div className="col6">
                             <Input
@@ -137,33 +160,92 @@ export const AddMachineComponent = ({ edit }) => {
                     <div className="rows">
                         <div className="col6">
                             <Input
-                                identifier="totalHoursToMaintenance"
-                                type="number"
-                                placeholder="Horas para el mantenimiento"
-                                max={999}
+                                identifier="model"
+                                type="text"
+                                placeholder="Modelo"
+                                min={3}
+                                max={100}
                                 height={50}
-                                defaultValue={
-                                    edit ? edit.totalHoursToMaintenance : ""
-                                }
+                                defaultValue={edit ? edit.model : ""}
                                 animated
                             />
                         </div>
                         <div className="col6">
-                            {!edit && (
-                                <Input
-                                    identifier="totalHoursRegisted"
-                                    type="number"
-                                    placeholder="Horas de uso (Opcional)"
-                                    max={200}
-                                    height={50}
-                                    defaultValue={
-                                        edit ? edit.totalHoursRegisted : ""
-                                    }
-                                    animated
-                                />
-                            )}
+                            <Input
+                                identifier="adquisiton_year"
+                                type="text"
+                                placeholder="Año de adquisición"
+                                min={3}
+                                max={20}
+                                height={50}
+                                defaultValue={edit ? edit.adquisiton_year : ""}
+                                animated
+                            />
                         </div>
                     </div>
+                    <div className="rows">
+                        <div className="col6">
+                            <Input
+                                identifier="voltage"
+                                type="text"
+                                placeholder="Voltaje"
+                                min={2}
+                                max={100}
+                                height={50}
+                                defaultValue={edit ? edit.voltage : ""}
+                                animated
+                            />
+                        </div>
+                        <div className="col6">
+                            <Input
+                                identifier="watts"
+                                type="text"
+                                placeholder="Watts"
+                                min={1}
+                                max={100}
+                                height={50}
+                                defaultValue={edit ? edit.watts : ""}
+                                animated
+                            />
+                        </div>
+                    </div>
+                    <div className="rows">
+                        <div className="col6">
+                            <Input
+                                identifier="stream"
+                                type="text"
+                                placeholder="Corriente"
+                                min={2}
+                                max={100}
+                                height={50}
+                                defaultValue={edit ? edit.stream : ""}
+                                animated
+                            />
+                        </div>
+                        <div className="col6">
+                            <Input
+                                identifier="brand"
+                                type="text"
+                                placeholder="Marca"
+                                min={3}
+                                max={50}
+                                height={50}
+                                defaultValue={edit ? edit.brand : ""}
+                                animated
+                            />
+                        </div>
+                    </div>
+                    {!edit && (
+                        <Input
+                            identifier="totalHoursRegisted"
+                            type="number"
+                            placeholder="Horas de uso (Opcional)"
+                            max={200}
+                            height={50}
+                            defaultValue={edit ? edit.totalHoursRegisted : ""}
+                            animated
+                        />
+                    )}
                 </div>
             </div>
             <Button
