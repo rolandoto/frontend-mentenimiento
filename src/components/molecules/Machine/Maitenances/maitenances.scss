@@ -1,4 +1,4 @@
-@import '../../../../vars.scss';
+@import "../../../../vars.scss";
 
 .custom_add_maitenance {
     @include absolute_center();
@@ -12,4 +12,22 @@
     svg {
         color: #fff;
     }
+}
+
+.maitenance_detail_card {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+
+    .check_list_item {
+        display: flex;
+        padding-left: 15px;
+    }
+}
+
+.text_decoration_complete {
+    padding-left: 12px;
+}
+
+.text_decoration_complete .MuiFormControlLabel-label {
+    text-decoration: line-through;
 }

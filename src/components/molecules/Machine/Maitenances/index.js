@@ -4,15 +4,19 @@ import { Add } from "@material-ui/icons";
 import { alertActions, machineActions } from "../../../../@actions";
 import { MaitenancePerHour } from "../MaitenancePerHour";
 import { Button } from "../../../atoms";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { ListDetail } from "../../../organisms";
 import { useDispatch, useSelector } from "react-redux";
+import * as cx from "classnames";
 
 export const MaitenancePartial = ({ machine }) => {
     const dispatch = useDispatch();
     const [preconfiguredMaitenances, setPreconfiguredMaitenances] = useState(
         []
     );
-    const [maintenancesDetail , setMaintenancesStatus] = useState([]);
+    const [maintenancesDetail, setMaintenancesStatus] = useState([]);
+    const [maintenanceDetail, setMaintenanceDetail] = useState(false);
     const maintenancesReducer = useSelector(
         (state) => state.MaitenancesAllReducer
     );
@@ -118,21 +122,61 @@ export const MaitenancePartial = ({ machine }) => {
 
     useEffect(() => {
         if (machine.maintenances) {
-            const setMaintenancesDetail = machine.maintenances.map((maintenance) => {
-                if (maintenance.complete) {
-                    maintenance.statusDetail = "Completado";
-                } else {
-                    maintenance.statusDetail = "En curso";
+            const setMaintenancesDetail = machine.maintenances.map(
+                (maintenance) => {
+                    if (maintenance.complete) {
+                        maintenance.statusDetail = "Completado";
+                    } else {
+                        maintenance.statusDetail = "En curso";
+                    }
+                    return maintenance;
                 }
-                return maintenance;
-            });
-            setMaintenancesStatus(setMaintenancesDetail)
+            );
+            setMaintenancesStatus(setMaintenancesDetail);
         }
     }, [machine.maintenances]);
 
-    const showMaintenanceDetails = maintenance => {
-        console.log(maintenance)
-    }
+    const showMaintenanceDetails = (maintenance) => {
+        setMaintenanceDetail({
+            show: true,
+            ...maintenance,
+        });
+    };
+
+    const eHandleCheckTask = (evt, machineID, maintenanceID, taskID) => {
+        if ((machineID, maintenanceID, taskID)) {
+            const setTaskStatus = {
+                completed: evt.target.checked,
+                machineID,
+                maintenanceID,
+                taskID,
+            };
+            const completeMaintenanceTask = maintenancesDetail.map(
+                (maintenance) => {
+                    if (maintenance._id === maintenanceID) {
+                        maintenance.check_list = maintenance.check_list.map(
+                            (task) => {
+                                if (task.id === taskID) {
+                                    task.complete = setTaskStatus.completed;
+                                }
+                                return task;
+                            }
+                        );
+                    }
+                    return maintenance;
+                }
+            );
+            setMaintenancesStatus(completeMaintenanceTask);
+            console.log(setTaskStatus)
+        } else {
+            dispatch(
+                alertActions.showAlert({
+                    type: "failure",
+                    message: "Ha ocurrido un error, intentalo nuevamente.",
+                })
+            );
+        }
+    };
 
     return (
         <div className="rows">
@@ -182,7 +226,7 @@ export const MaitenancePartial = ({ machine }) => {
                 <ListDetail
                     show={showMaintenanceDetails}
                     items={maintenancesDetail}
-                    keysToShow={["statusDetail" , "name"]}
+                    keysToShow={["statusDetail", "name"]}
                 />
             </div>
 
@@ -190,6 +234,58 @@ export const MaitenancePartial = ({ machine }) => {
                 <div className="center_elements flex-start mnh-25">
                     <span>Detalles</span>
                 </div>
+                {maintenanceDetail.show && (
+                    <div className="maitenance_detail_card">
+                        <p>
+                            <strong className="f600">
+                                Nombre del mantenimiento:
+                            </strong>{" "}
+                            {maintenanceDetail.name}
+                        </p>
+                        <p className="mt-10">
+                            <strong className="f600">
+                                Tipo de mantenimiento:
+                            </strong>{" "}
+                            {maintenanceDetail.maintenanceType.name}
+                        </p>
+                        <p className="mt-10">
+                            <strong className="f600">Estado:</strong>{" "}
+                            {maintenanceDetail.statusDetail}
+                        </p>
+
+                        <h3 className="mt-10 f600">Tareas a realizar</h3>
+                        {maintenanceDetail.check_list.map((task) => (
+                            <div className="check_list_item mt-10">
+                                <FormControlLabel
+                                    key={task._id}
+                                    control={
+                                        !task.complete ? (
+                                            <Checkbox
+                                                checked={task.complete}
+                                                onChange={(e) =>
+                                                    eHandleCheckTask(
+                                                        e,
+                                                        machine._id,
+                                                        maintenanceDetail._id,
+                                                        task.id
+                                                    )
+                                                }
+                                                name="checkTask"
+                                                color="primary"
+                                            />
+                                        ) : <div></div>
+                                    }
+                                    label={task.name}
+                                    className={cx(
+                                        task.complete
+                                            ? "text_decoration_complete"
+                                            : ""
+                                    )}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
