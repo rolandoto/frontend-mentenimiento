@@ -87,16 +87,16 @@ export const MachineDetails = (_) => {
                         <p className="center_elements">
                             Horas registradas:{" "}
                             <span className="hours_display">
-                                {machine.totalHoursRegisted
-                                    ? machine.totalHoursRegisted
+                                {machine.item.totalHoursRegisted
+                                    ? machine.item.totalHoursRegisted
                                     : 0}
                             </span>
                         </p>
                         <p className="center_elements">
                             Horas trabajadas:{" "}
                             <span className="hours_display">
-                                {machine.totalHoursWorking
-                                    ? machine.totalHoursWorking
+                                {machine.item.totalHoursWorking
+                                    ? machine.item.totalHoursWorking
                                     : 0}
                             </span>
                         </p>

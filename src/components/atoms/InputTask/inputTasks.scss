@@ -1,0 +1,12 @@
+@import "../../../vars";
+
+.removeTask {
+    cursor: pointer;
+    position: absolute;
+    right: 6px;
+    top: 8px;
+
+    svg {
+        color: $error-color;
+    }
+}

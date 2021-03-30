@@ -1,25 +1,54 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { maintenanceActions } from "../../../../@actions";
-import { Input, Button, Text, Select, Option } from "../../../atoms";
+import { alertActions, maintenanceActions } from "../../../../@actions";
+import { Input, Button, Text, Select, Option, InputTask } from "../../../atoms";
 
 export const AddMaintenance = ({ edit }) => {
     const maintenanceTypes = useSelector(
         (state) => state.MaitenanceTypesReducer
     );
-    const machinesReducer = useSelector((state) => state.MachineAllReducer);
+
     const dispatch = useDispatch();
 
     const eHandleSubmit = (e) => {
         e.preventDefault();
         const maintenance = {
             maintenanceType: e.target.maintenanceType.value,
-            machine: e.target.machine.value,
+            name: e.target.maintenanceName.value,
+            check_list: JSON.parse(e.target.tasks.value),
         };
 
-        dispatch(maintenanceActions.createMaitenance(maintenance));
+        if (
+            maintenance.maintenanceType.length > 0 &&
+            maintenance.name.length > 0 &&
+            maintenance.check_list.length > 0
+        ) {
+            if (edit) {
+                if (e.target.maitenanceID) {
+                    maintenance.maintenanceID = e.target.maitenanceID.value;
+                    
+                    dispatch(maintenanceActions.updateMaitenance(maintenance));
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "No se ha encontrado el ID del mantenimiento.",
+                        })
+                    );
+                }
+            } else {
+                dispatch(maintenanceActions.createMaitenance(maintenance));
+            }
+        } else {
+            dispatch(
+                alertActions.showAlert({
+                    type: "failure",
+                    message: "Debes llenar todos los campos requeridos.",
+                })
+            );
+        }
     };
-
     return (
         <form
             method="POST"
@@ -42,7 +71,7 @@ export const AddMaintenance = ({ edit }) => {
 
             {edit && (
                 <Input
-                    identifier="maitenanceTypeID"
+                    identifier="maitenanceID"
                     type="hidden"
                     placeholder="ID del tipo de mantenimeinto"
                     min={5}
@@ -56,8 +85,8 @@ export const AddMaintenance = ({ edit }) => {
             <Select
                 identifier="maintenanceType"
                 placeholder="Tipo de mantenimiento"
-                heigth={50}
-                defaultSelected={edit ? edit.environmentID : ""}
+                height={50}
+                defaultSelected={edit ? edit.maintenanceType._id : ""}
             >
                 {maintenanceTypes.status &&
                     maintenanceTypes.maintenanceTypes.map((type) => (
@@ -69,21 +98,18 @@ export const AddMaintenance = ({ edit }) => {
                     ))}
             </Select>
 
-            <Select
-                identifier="machine"
-                placeholder="Seleccionar maquina"
-                heigth={50}
-                defaultSelected={edit ? edit.environmentID : ""}
-            >
-                {machinesReducer.status &&
-                    machinesReducer.machines.map((type) => (
-                        <Option
-                            key={type._id}
-                            value={type._id}
-                            text={type.name}
-                        />
-                    ))}
-            </Select>
+            <Input
+                identifier="maintenanceName"
+                height={50}
+                animated
+                type="text"
+                placeholder="Nombre del mantenimiento"
+                defaultValue={edit ? edit.name : ""}
+                min={5}
+                max={150}
+            />
+
+            <InputTask tasks={edit ? edit.check_list : []} max={10} />
 
             <Button
                 text={edit ? "Editar" : "Agregar"}

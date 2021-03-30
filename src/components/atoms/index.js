@@ -7,3 +7,4 @@ export * from "./UploadImage";
 export * from "./Select";
 export * from "./TextArea";
 export * from "./InfoBox";
+export * from "./InputTask";

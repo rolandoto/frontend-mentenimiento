@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { PrivateRoute, cookieHelper, socket } from "./helpers";
+import { PrivateRoute, cookieHelper } from "./helpers";
 import { UserActions } from "./@actions";
 import { Modal, ModalDetails } from "./layouts";
 import { Alert } from "./components/organisms";
@@ -20,12 +20,6 @@ import {
 export const App = (_) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.AuthReducer);
-
-    useEffect((_) => {
-        socket.on("newMachineSaved", (data) => {
-            console.log(data);
-        });
-    }, []);
 
     useEffect(
         (_) => {

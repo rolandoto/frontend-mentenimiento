@@ -14,6 +14,8 @@ export const Input = ({
     defaultValue = "",
     readonly,
     onChange,
+    onKeyPress,
+    clear,
     ...rest
 }) => {
     const textRef = useRef();
@@ -40,6 +42,12 @@ export const Input = ({
             }
         }
     };
+
+    useEffect(() => {
+        if (clear) {
+            setInputValue("");
+        }
+    }, [clear]);
 
     const changeValue = (e) => {
         if (onChange) {
@@ -141,6 +149,7 @@ export const Input = ({
                     changeValue(e),
                     evaluateInputErrors(e),
                 ],
+                onKeyPress: (e) => (onKeyPress ? onKeyPress(e) : null),
                 onBlur: () => blurEvent(),
             })}
             {errors && <span className="error">{errors.message}</span>}

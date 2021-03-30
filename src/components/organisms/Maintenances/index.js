@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "../../../layouts";
-import { AddMaintenanceType } from "../../organisms/Modals";
+import { AddMaintenanceType, AddMaintenance } from "../../organisms/Modals";
 import { alertActions, maintenanceActions } from "../../../@actions";
 import { List } from "../";
 import { useDispatch } from "react-redux";
@@ -9,15 +9,17 @@ export const MaintenancesList = ({ items = [], tab }) => {
     const dispatch = useDispatch();
     const listHeader =
         tab === "maintenances"
-            ? ["Nombre del mantenimiento", "Estado", ""]
+            ? ["Tipo de mantenimiento", "Nombre del mantenimiento", ""]
             : ["Identificador", "Nombre", ""];
     const keys =
         tab === "maintenances"
-            ? ["maintenanceTypeName", "complete"]
+            ? ["maintenanceTypeName", "name"]
             : ["_id", "name"];
 
     const onDeleteMaitenance = (data) => {
-        const confirm = window.confirm("Estas seguro de eliminar la maquina?");
+        const confirm = window.confirm(
+            "Estas seguro de eliminar el mantenimiento?"
+        );
         if (confirm) {
             if (data._id) {
                 dispatch(maintenanceActions.deleteMaintenance(data._id));
@@ -56,7 +58,7 @@ export const MaintenancesList = ({ items = [], tab }) => {
                 header={listHeader}
                 items={items}
                 EditComponent={
-                    tab === "maintenances" ? false : AddMaintenanceType
+                    tab === "maintenances" ? AddMaintenance : AddMaintenanceType
                 }
                 keys={keys}
                 onDelete={

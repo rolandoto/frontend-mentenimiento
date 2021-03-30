@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./maitenances.scss";
 import { Add } from "@material-ui/icons";
 import { alertActions, machineActions } from "../../../../@actions";
 import { MaitenancePerHour } from "../MaitenancePerHour";
 import { Button } from "../../../atoms";
+import { ListDetail } from "../../../organisms";
 import { useDispatch, useSelector } from "react-redux";
 
 export const MaitenancePartial = ({ machine }) => {
@@ -11,6 +12,7 @@ export const MaitenancePartial = ({ machine }) => {
     const [preconfiguredMaitenances, setPreconfiguredMaitenances] = useState(
         []
     );
+    const [maintenancesDetail , setMaintenancesStatus] = useState([]);
     const maintenancesReducer = useSelector(
         (state) => state.MaitenancesAllReducer
     );
@@ -114,6 +116,24 @@ export const MaitenancePartial = ({ machine }) => {
         }
     };
 
+    useEffect(() => {
+        if (machine.maintenances) {
+            const setMaintenancesDetail = machine.maintenances.map((maintenance) => {
+                if (maintenance.complete) {
+                    maintenance.statusDetail = "Completado";
+                } else {
+                    maintenance.statusDetail = "En curso";
+                }
+                return maintenance;
+            });
+            setMaintenancesStatus(setMaintenancesDetail)
+        }
+    }, [machine.maintenances]);
+
+    const showMaintenanceDetails = maintenance => {
+        console.log(maintenance)
+    }
+
     return (
         <div className="rows">
             <div className="col4">
@@ -153,12 +173,20 @@ export const MaitenancePartial = ({ machine }) => {
                     )}
                 </form>
             </div>
-            <div className="col3 ">
+
+            <div className="col3">
                 <div className="center_elements flex-start mnh-25">
-                    <span>Detalles</span>
+                    <span>Mantenimientos</span>
                 </div>
+
+                <ListDetail
+                    show={showMaintenanceDetails}
+                    items={maintenancesDetail}
+                    keysToShow={["statusDetail" , "name"]}
+                />
             </div>
-            <div className="col5 ">
+
+            <div className="col5">
                 <div className="center_elements flex-start mnh-25">
                     <span>Detalles</span>
                 </div>

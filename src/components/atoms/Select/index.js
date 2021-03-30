@@ -59,7 +59,7 @@ export const Select = ({
                 onChange(selectRef.current.value);
             }
         },
-        [selectedOption , onChange]
+        [selectedOption, onChange]
     );
 
     return (

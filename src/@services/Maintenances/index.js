@@ -8,6 +8,7 @@ export const maintenanceService = {
     createMaintenance,
     completeMaitenance,
     updateMaintenanceTypes,
+    updateMaintenance,
     deleteMaintenanceType,
     deleteMaintenance,
 };
@@ -72,6 +73,20 @@ function updateMaintenanceTypes(data) {
         data,
         url:
             process.env.REACT_APP_API + "maintenanceType/updateMaintenanceType",
+    };
+
+    return axios.request(configuration);
+}
+
+function updateMaintenance(data) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data,
+        url:
+            process.env.REACT_APP_API + "maintenance/updateMaintenance",
     };
 
     return axios.request(configuration);

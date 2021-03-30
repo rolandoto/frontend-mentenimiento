@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ArrowBackIos, ArrowForwardIos, Check } from "@material-ui/icons";
+import { ArrowBackIos, ArrowForwardIos, Check , VisibilityOutlined } from "@material-ui/icons";
 import "./listDetail.scss";
 
-export const ListDetail = ({ items = [], keysToShow = [], complete }) => {
+export const ListDetail = ({ items = [], keysToShow = [], complete, show }) => {
     const [itemsToShow, setItemsToShow] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerView = 5;
@@ -51,12 +51,22 @@ export const ListDetail = ({ items = [], keysToShow = [], complete }) => {
                                 </p>
                             );
                         })}
-                        {item.complete === false && (
+                        {item.complete
+                            ? item.complete === false && (
+                                  <div
+                                      className="complete_check"
+                                      onClick={() => complete(item)}
+                                  >
+                                      <Check />
+                                  </div>
+                              )
+                            : null}
+                        {show && (
                             <div
-                                className="complete_check"
-                                onClick={() => complete(item)}
+                                className="complete_check icon_show"
+                                onClick={() => show(item)}
                             >
-                                <Check />
+                                <VisibilityOutlined />
                             </div>
                         )}
                     </li>

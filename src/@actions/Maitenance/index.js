@@ -9,6 +9,7 @@ export const maintenanceActions = {
     createMaitenanceType,
     createMaitenance,
     updateMaitenanceTypes,
+    updateMaitenance,
     completeMaitenance,
     deleteMaintenanceType,
     deleteMaintenance,
@@ -214,6 +215,56 @@ function updateMaitenanceTypes(data) {
                 if (res.data.status) {
                     dispatch(
                         callback(MaintenanceTypes.GETMAITENANCETYPES_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, por favor intentalo nuevamente.",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function updateMaitenance(data) {
+    return (dispatch) => {
+        dispatch(request(MaintenanceTypes.UPDATEMAITENANCE_REQUEST));
+
+        maintenanceService
+            .updateMaintenance(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MaintenanceTypes.GETMAITENANCES_SUCCESS, {
                             ...res.data,
                             edit: true,
                         })
