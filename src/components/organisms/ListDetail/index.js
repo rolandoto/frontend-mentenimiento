@@ -36,14 +36,14 @@ export const ListDetail = ({ items = [], keysToShow = [], complete, show }) => {
     return (
         <div className="list_item_container">
             <ul className="list_body">
-                {itemsToShow.map((item, index) => (
+                {itemsToShow.map((item) => (
                     <li
                         className="list_item_detail direction_column list_item_shadow"
-                        key={index}
+                        key={"LTS"  + Math.random() * (2500000 - 2500)}
                     >
-                        {keysToShow.map((key, i) => {
+                        {keysToShow.map((key) => {
                             return (
-                                <p key={i}>
+                                <p key={"ITM"  + Math.random() * (2500000 - 2500)}>
                                     {key === "stockUsed" && (
                                         <span>Cantidad usada: </span>
                                     )}
@@ -56,6 +56,7 @@ export const ListDetail = ({ items = [], keysToShow = [], complete, show }) => {
                                   <div
                                       className="complete_check"
                                       onClick={() => complete(item)}
+                                      key={"CMC"  + Math.random() * (2500000 - 2500)}
                                   >
                                       <Check />
                                   </div>
@@ -65,6 +66,7 @@ export const ListDetail = ({ items = [], keysToShow = [], complete, show }) => {
                             <div
                                 className="complete_check icon_show"
                                 onClick={() => show(item)}
+                                key={"VBO"  + Math.random() * (2500000 - 2500)}
                             >
                                 <VisibilityOutlined />
                             </div>

@@ -9,6 +9,9 @@ export const machineService = {
     getMachineNoAuth,
     registerMachineUse,
     updatePreconfiguredMaitenances,
+    completeCheckListTask,
+    resetMachineHours,
+    registerMachineIssue,
 };
 
 function getMachineNoAuth(_id) {
@@ -61,6 +64,19 @@ function registerMachineUse(data) {
     return axios.request(configuration);
 }
 
+function registerMachineIssue(data) {
+    const configuration = {
+        method: "post",
+        headers: {
+            Authorization: data.token,
+        },
+        data,
+        url: process.env.REACT_APP_API + "machine/registerMachineIssue",
+    };
+
+    return axios.request(configuration);
+}
+
 function updateMachine(data) {
     const configuration = {
         method: "put",
@@ -85,7 +101,33 @@ function updatePreconfiguredMaitenances(data) {
             process.env.REACT_APP_API +
             "machine/updatePreconfiguredMaitenances",
     };
-    
+
+    return axios.request(configuration);
+}
+
+function completeCheckListTask(data) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data,
+        url: process.env.REACT_APP_API + "machine/completeTask",
+    };
+
+    return axios.request(configuration);
+}
+
+function resetMachineHours(machineID) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data: { machineID },
+        url: process.env.REACT_APP_API + "machine/resetMachineHours",
+    };
+
     return axios.request(configuration);
 }
 

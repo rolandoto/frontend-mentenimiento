@@ -30,7 +30,13 @@ export const ModalDetails = (_) => {
         if (Component) {
             return (
                 <div className="modal_shadow">
-                    <div className="modal_details">
+                    <div
+                        className={
+                            modal.size
+                                ? "modal_details " + modal.size
+                                : "modal_details modal_size_big"
+                        }
+                    >
                         <Close
                             onClick={() => closeModal()}
                             className="icon_close_modal"

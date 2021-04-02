@@ -1,6 +1,6 @@
 import { alertActions, request, callback, modalActions } from "../";
 import { machineService } from "../../@services";
-import { MachinesTypes } from "../../@types";
+import { MachinesTypes, ModalTypes } from "../../@types";
 
 export const machineActions = {
     getMachines,
@@ -9,7 +9,10 @@ export const machineActions = {
     updateMachine,
     deleteMachine,
     registerMachineUse,
-    updatePreconfiguredMaitenances
+    updatePreconfiguredMaitenances,
+    updateMachineMaintenanceTask,
+    resetMachineHours,
+    registerMachineIssue,
 };
 
 function getMachines() {
@@ -187,6 +190,48 @@ function registerMachineUse(data) {
     };
 }
 
+function registerMachineIssue(data) {
+    return (dispatch) => {
+        machineService
+            .registerMachineIssue(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
 function updateMachine(data) {
     return (dispatch) => {
         dispatch(request(MachinesTypes.UPDATEMACHINE_REQUEST));
@@ -201,6 +246,112 @@ function updateMachine(data) {
                             edit: true,
                         })
                     );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function updateMachineMaintenanceTask(data) {
+    return (dispatch) => {
+        dispatch(request(MachinesTypes.UPDATEMACHINEMAINTENANCETASK_REQUEST));
+
+        machineService
+            .completeCheckListTask(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINES_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function resetMachineHours(machineID) {
+    return (dispatch) => {
+        dispatch(request(MachinesTypes.RESETMACHINEHOURS_REQUEST));
+
+        machineService
+            .resetMachineHours(machineID)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINES_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch({
+                        type: ModalTypes.SHOW_MODAL_DETAIL,
+                        item: res.data.updatedMachine,
+                        component: "MachineDetails",
+                        size: false,
+                    });
                     dispatch(
                         alertActions.showAlert({
                             type: "success",

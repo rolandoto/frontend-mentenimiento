@@ -6,6 +6,7 @@ export const sparePartsService = {
     createSparePart,
     updateSparePart,
     assignSparePartToMachine,
+    assignSparePartStockToMachine
 };
 
 function getSpareParts() {
@@ -53,7 +54,20 @@ function assignSparePartToMachine(data) {
             Authorization: cookieHelper.getCookie("user"),
         },
         data,
-        url: process.env.REACT_APP_API + "sparePart/assignSparePartToMachine",
+        url: process.env.REACT_APP_API + "sparePart/assingSpareParts",
+    };
+
+    return axios.request(configuration);
+}
+
+function assignSparePartStockToMachine(data) {
+    const configuration = {
+        method: "put",
+        headers: {
+            Authorization: cookieHelper.getCookie("user"),
+        },
+        data,
+        url: process.env.REACT_APP_API + "sparePart/useSparePart",
     };
 
     return axios.request(configuration);

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./avatar.scss";
 
-export const Avatar = ({ size = 50, online }) => {
+export const Avatar = ({ size = 50, online, image }) => {
     const user = useSelector((state) => state.AuthReducer);
 
     const loadPhoto = (_) => {
@@ -23,7 +23,7 @@ export const Avatar = ({ size = 50, online }) => {
             }}
         >
             <img
-                src={loadPhoto()}
+                src={image ? image : loadPhoto()}
                 alt="User profile"
                 className="responsive_image_avatar"
             />

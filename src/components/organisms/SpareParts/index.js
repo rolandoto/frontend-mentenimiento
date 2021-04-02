@@ -28,7 +28,7 @@ export const SparePartList = ({ spareParts = [] }) => {
     // };
 
     const assignSparePart = (item) => {
-        dispatch(modalActions.showModal("AddSparePartToMachine", item));
+        dispatch(modalActions.showModalDetail("AddSparePartToMachine", item , "modal_size_small"));
     };
 
     return (

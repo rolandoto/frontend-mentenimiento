@@ -67,11 +67,18 @@ body {
     }
 }
 
+.modal_size_big {
+    width: 100vw;
+}
+
+.modal_size_small {
+    width: 30vw;
+}
+
 .modal_details {
     background-color: #fff;
     position: absolute;
     right: 0;
-    width: 100vw;
     height: 100vh;
     animation: show_modal 0.3s ease-out;
 
@@ -107,6 +114,14 @@ body {
 
 .mr_10 {
     margin-right: 10px;
+}
+
+.ml_10 {
+    margin-left: 10px;
+}
+
+.h100 {
+    height: 100%;
 }
 
 .absolute_center {

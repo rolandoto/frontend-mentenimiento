@@ -1,0 +1,13 @@
+@import "../../../../vars";
+
+.item_machine_assing {
+    @include custom_center("row" , inherit , center);
+    margin: 10px 0;
+}
+
+
+.machine_detailed_list {
+    max-height: 80%;
+    padding: 0 0 20px 0;
+    overflow-y: auto;
+}

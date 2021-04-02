@@ -7,12 +7,12 @@ export const modalActions = {
     closeModalDetail,
 };
 
-function showModal(type , item) {
+function showModal(type, item) {
     return (dispatch) => {
         dispatch({
             type: ModalTypes.SHOW_MODAL,
             component: type,
-            item
+            item,
         });
     };
 }
@@ -25,12 +25,13 @@ function closeModal() {
     };
 }
 
-function showModalDetail(type , item) {
+function showModalDetail(type, item, size) {
     return (dispatch) => {
         dispatch({
             type: ModalTypes.SHOW_MODAL_DETAIL,
             item,
             component: type,
+            size: size ? size : false,
         });
     };
 }

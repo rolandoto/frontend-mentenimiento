@@ -89,6 +89,35 @@ export const MachineUse = (_) => {
             );
         }
     };
+    const eHandleSubmitIssue = (e) => {
+        e.preventDefault();
+        const data = {
+            token: user.token,
+            machineID: machine.machine._id,
+            issue: e.target.machine_issue.value,
+        };
+
+        if (data.token !== "") {
+            if (data.machineID !== "" && data.issue !== "") {
+                e.target.reset();
+                dispatch(machineActions.registerMachineIssue(data));
+            } else {
+                dispatch(
+                    alertActions.showAlert({
+                        type: "failure",
+                        message: "Todos los campos son requeridos",
+                    })
+                );
+            }
+        } else {
+            dispatch(
+                alertActions.showAlert({
+                    type: "failure",
+                    message: "El token de usuario es requerio.",
+                })
+            );
+        }
+    };
 
     if (machine.state) {
         return (
@@ -232,7 +261,7 @@ export const MachineUse = (_) => {
                     step !== steps.one &&
                     stepType === stepTypes.error && (
                         <div className="center_absolute login_container">
-                            <form method="POST" onSubmit={eHandleSubmitUse}>
+                            <form method="POST" onSubmit={eHandleSubmitIssue}>
                                 <div
                                     className="back_to_step center_absolute"
                                     onClick={() => setStep(steps.one)}
@@ -255,7 +284,7 @@ export const MachineUse = (_) => {
                                 />
                                 <TextArea
                                     placeholder="Reportar fallo"
-                                    identifier="machine_error"
+                                    identifier="machine_issue"
                                 />
                                 <Button
                                     text="Reportar"

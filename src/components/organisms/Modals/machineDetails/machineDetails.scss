@@ -115,6 +115,21 @@
         font-size: 1.8em;
         margin-left: 6px;
     }
+
+    .reset_hours_working {
+        cursor: pointer;
+        margin-left: 5px;
+        @include center_vertical();
+
+        svg {
+            color: $secondary;
+        }
+
+        span {
+            font-size: .8em;
+            margin-left: 5px;
+        }
+    }
 }
 
 .container_content_modal {

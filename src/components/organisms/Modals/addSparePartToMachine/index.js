@@ -1,30 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sparePartsActions } from "../../../../@actions";
-import { Button, Text, Select, Option, Input } from "../../../atoms";
+import { Text, Avatar, Button, Input } from "../../../atoms";
+import "./addSparePartToMachine.scss";
 
 export const AddSparePartToMachine = (_) => {
     const machinesReducer = useSelector((state) => state.MachineAllReducer);
-    const modal = useSelector((state) => state.ModalReducer);
-    const dispatch = useDispatch();
+    const modal = useSelector((state) => state.ModalDetailReducer);
+    const dipatch = useDispatch();
+    const [machines, setMachines] = useState([]);
+    const [machinesFiltered, setMachinesFiltered] = useState(false);
+    const [machinesSelected, setMachinesSelected] = useState(
+        modal.item.machines
+    );
 
-    const eHandleSubmit = (e) => {
-        e.preventDefault();
-        const sparePart = {
-            sparePartID: e.target.sparePartID.value,
-            machineID: e.target.machineID.value,
-            stock: e.target.stock.value,
-        };
-        dispatch(sparePartsActions.assignSparePartToMachine(sparePart));
+    useEffect(
+        (_) => {
+            const selectedMachines = [...machinesSelected];
+            const machinesAssigned = machinesReducer.machines.map((machine) => {
+                const isAssigned = selectedMachines.some((id) => {
+                    return machine._id === id;
+                });
+
+                machine.isAssigned = isAssigned ? true : false;
+
+                return machine;
+            });
+
+            setMachines(machinesAssigned);
+        },
+        [machinesReducer.machines, machinesSelected]
+    );
+
+    const eHandlePressKey = (e) => {
+        const filter = e.target.value;
+        if (filter.length > 0) {
+            const machinesToFilter = [...machines];
+            const resultFilter = machinesToFilter.filter((machine) => {
+                return machine.name.includes(filter);
+            });
+            setMachinesFiltered(resultFilter);
+        } else {
+            setMachinesFiltered(false);
+        }
+    };
+
+    const evalueSelectedMachine = (id) => {
+        const selectedMachines = [...machinesSelected];
+        if (selectedMachines.some((machine) => machine === id)) {
+            setMachinesSelected(
+                selectedMachines.filter((machine) => {
+                    return machine !== id;
+                })
+            );
+        } else {
+            setMachinesSelected([...selectedMachines, id]);
+        }
+
+        dipatch(
+            sparePartsActions.assignSparePartToMachine({
+                sparePartID: modal.item._id,
+                machineID: id,
+            })
+        );
+    };
+
+    const printMachines = (machines) => {
+        return machines.map((machine) => (
+            <div key={machine._id} className="item_machine_assing">
+                <input
+                    type="checkbox"
+                    onChange={() => evalueSelectedMachine(machine._id)}
+                    checked={machine.isAssigned}
+                    className="mr_10"
+                />
+                <Avatar
+                    image={
+                        process.env.REACT_APP_API +
+                        machine.machinePhoto.folder +
+                        machine.machinePhoto.filename
+                    }
+                    className="machine_photo"
+                    size={40}
+                />
+                <p className="ml_10">{machine.name}</p>
+            </div>
+        ));
     };
 
     return (
-        <form
-            method="POST"
-            className="p20"
-            onSubmit={eHandleSubmit}
-            encType="multipar/form-data"
-        >
+        <div className="p20 h100">
             <Text
                 type="h2"
                 text="Asignar repuesto"
@@ -33,55 +98,26 @@ export const AddSparePartToMachine = (_) => {
                 color="#83889c"
             />
             <div className="separator_top"></div>
-
-            <Input
+            <input
                 type="hidden"
-                animated
-                identifier="sparePartID"
-                placeholder="ID"
-                min={1}
-                max={100}
-                defaultValue={modal.item._id}
-                readonly
+                value={JSON.stringify(machinesSelected)}
+                readOnly
             />
 
             <Input
                 type="text"
+                placeholder="Buscar maquina"
                 animated
-                identifier="sparePartName"
-                placeholder="Repuesto"
-                min={1}
+                min={0}
                 max={100}
-                defaultValue={modal.item.name}
-                readonly
+                onKeyUp={(e) => eHandlePressKey(e)}
             />
 
-            <Select
-                identifier="machineID"
-                placeholder="Seleccionar maquina"
-                heigth={50}
-            >
-                {machinesReducer.status &&
-                    machinesReducer.machines.map((type) => (
-                        <Option
-                            key={type._id}
-                            value={type._id}
-                            text={type.name}
-                        />
-                    ))}
-            </Select>
+            <div className="machine_detailed_list">
+                {printMachines(machinesFiltered ? machinesFiltered : machines)}
+            </div>
 
-            <Input
-                type="number"
-                animated
-                identifier="stock"
-                placeholder="Cantidad de repuestos a usar"
-                min={1}
-                max={999}
-                defaultValue={0}
-            />
-
-            <Button text="Asignar" variant="secondary btn-big" />
-        </form>
+            <Button text="Guardar" variant="secondary btn-big" />
+        </div>
     );
 };

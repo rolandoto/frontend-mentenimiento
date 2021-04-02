@@ -121,20 +121,23 @@ export const MaitenancePartial = ({ machine }) => {
     };
 
     useEffect(() => {
-        if (machine.maintenances) {
-            const setMaintenancesDetail = machine.maintenances.map(
-                (maintenance) => {
-                    if (maintenance.complete) {
-                        maintenance.statusDetail = "Completado";
-                    } else {
-                        maintenance.statusDetail = "En curso";
+        (async () => {
+            if (machine.maintenances) {
+                const setMaintenancesDetail = machine.maintenances.map(
+                    (maintenance) => {
+                        if (maintenance.complete) {
+                            maintenance.statusDetail = "Completado";
+                        } else {
+                            maintenance.statusDetail = "En curso";
+                        }
+                        return maintenance;
                     }
-                    return maintenance;
-                }
-            );
-            setMaintenancesStatus(setMaintenancesDetail);
-        }
-    }, [machine.maintenances]);
+                );
+                await setMaintenancesDetail.reverse();
+                setMaintenancesStatus(setMaintenancesDetail);
+            }
+        })();
+    }, [machine, machine.maintenances]);
 
     const showMaintenanceDetails = (maintenance) => {
         setMaintenanceDetail({
@@ -167,7 +170,9 @@ export const MaitenancePartial = ({ machine }) => {
                 }
             );
             setMaintenancesStatus(completeMaintenanceTask);
-            console.log(setTaskStatus)
+            dispatch(
+                machineActions.updateMachineMaintenanceTask(setTaskStatus)
+            );
         } else {
             dispatch(
                 alertActions.showAlert({
@@ -232,7 +237,7 @@ export const MaitenancePartial = ({ machine }) => {
 
             <div className="col5">
                 <div className="center_elements flex-start mnh-25">
-                    <span>Detalles</span>
+                    <span>Detalle</span>
                 </div>
                 {maintenanceDetail.show && (
                     <div className="maitenance_detail_card">
@@ -255,12 +260,20 @@ export const MaitenancePartial = ({ machine }) => {
 
                         <h3 className="mt-10 f600">Tareas a realizar</h3>
                         {maintenanceDetail.check_list.map((task) => (
-                            <div className="check_list_item mt-10">
+                            <div
+                                className="check_list_item mt-10"
+                                key={"ITM" + Math.random() * (2500000 - 2500)}
+                            >
                                 <FormControlLabel
                                     key={task._id}
                                     control={
                                         !task.complete ? (
                                             <Checkbox
+                                                key={
+                                                    "CHB" +
+                                                    Math.random() *
+                                                        (2500000 - 2500)
+                                                }
                                                 checked={task.complete}
                                                 onChange={(e) =>
                                                     eHandleCheckTask(
@@ -273,7 +286,9 @@ export const MaitenancePartial = ({ machine }) => {
                                                 name="checkTask"
                                                 color="primary"
                                             />
-                                        ) : <div></div>
+                                        ) : (
+                                            <div></div>
+                                        )
                                     }
                                     label={task.name}
                                     className={cx(

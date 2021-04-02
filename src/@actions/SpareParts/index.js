@@ -1,11 +1,12 @@
 import { alertActions, request, callback, modalActions } from "../";
 import { sparePartsService } from "../../@services";
-import { SparePartsTypes } from "../../@types";
+import { MachinesTypes, ModalTypes, SparePartsTypes } from "../../@types";
 
 export const sparePartsActions = {
     getSpareParts,
     createSparePart,
     updateSparePart,
+    assignSparePartStockToMachine,
     assignSparePartToMachine,
 };
 
@@ -154,9 +155,71 @@ function updateSparePart(data) {
     };
 }
 
-function assignSparePartToMachine(data) {
+function assignSparePartStockToMachine(data) {
     return (dispatch) => {
         dispatch(request(SparePartsTypes.UPDATESPAREPART_REQUEST));
+
+        sparePartsService
+            .assignSparePartStockToMachine(data)
+            .then((res) => {
+                if (res.data.status) {
+                    dispatch(
+                        callback(MachinesTypes.GETMACHINES_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch({
+                        type: ModalTypes.SHOW_MODAL_DETAIL,
+                        item: res.data.updatedMachine,
+                        component: "MachineDetails",
+                        size: false,
+                    });
+                    dispatch(
+                        callback(SparePartsTypes.GETSPAREPARTS_SUCCESS, {
+                            ...res.data,
+                            edit: true,
+                        })
+                    );
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "success",
+                            message: res.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: res.data.message,
+                        })
+                    );
+                }
+            })
+            .catch((err) => {
+                if (err.response) {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message: err.response.data.message,
+                        })
+                    );
+                } else {
+                    dispatch(
+                        alertActions.showAlert({
+                            type: "failure",
+                            message:
+                                "Ha ocurrido un error, intentalo nuevamente",
+                        })
+                    );
+                }
+            });
+    };
+}
+
+function assignSparePartToMachine(data) {
+    return (dispatch) => {
+        dispatch(request(SparePartsTypes.ASSIGNSPAREPARTTOMACHINE_REQUEST));
 
         sparePartsService
             .assignSparePartToMachine(data)
@@ -168,7 +231,6 @@ function assignSparePartToMachine(data) {
                             edit: true,
                         })
                     );
-                    dispatch(modalActions.closeModal());
                     dispatch(
                         alertActions.showAlert({
                             type: "success",

@@ -15,6 +15,7 @@ export const Input = ({
     readonly,
     onChange,
     onKeyPress,
+    onKeyUp,
     clear,
     ...rest
 }) => {
@@ -150,6 +151,7 @@ export const Input = ({
                     evaluateInputErrors(e),
                 ],
                 onKeyPress: (e) => (onKeyPress ? onKeyPress(e) : null),
+                onKeyUp: (e) => (onKeyUp ? onKeyUp(e) : null),
                 onBlur: () => blurEvent(),
             })}
             {errors && <span className="error">{errors.message}</span>}

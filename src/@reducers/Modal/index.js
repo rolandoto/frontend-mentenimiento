@@ -22,6 +22,7 @@ export const ModalDetailReducer = (state = {}, action) => {
                 show: true,
                 item: action.item,
                 component: action.component,
+                size: action.size,
             };
         case ModalTypes.HIDE_MODAL_DETAIL:
             return {};

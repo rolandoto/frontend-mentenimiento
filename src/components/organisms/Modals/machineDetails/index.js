@@ -7,9 +7,11 @@ import {
     MaitenancePartial,
     AlertAndUsesPartial,
 } from "../../../molecules";
-import { useSelector } from "react-redux";
+import { Loop } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
 import "moment/locale/es";
 import "./machineDetails.scss";
+import { machineActions } from "../../../../@actions";
 
 export const MachineDetails = (_) => {
     const posibleOptions = {
@@ -17,6 +19,7 @@ export const MachineDetails = (_) => {
         spareParts: 2,
         alertAndErrors: 3,
     };
+    const dispatch = useDispatch();
     const machine = useSelector((state) => state.ModalDetailReducer);
     const [selected, setSelected] = useState(posibleOptions.maintenance);
 
@@ -28,6 +31,15 @@ export const MachineDetails = (_) => {
                 encoderOptions: 1,
                 backgroundColor: "white",
             });
+        }
+    };
+
+    const resetHours = (id) => {
+        const confirm = window.confirm(
+            "Estas seguro de reiniciar las horas de la maquina?"
+        );
+        if (confirm) {
+            dispatch(machineActions.resetMachineHours(id));
         }
     };
 
@@ -79,7 +91,7 @@ export const MachineDetails = (_) => {
                                 setSelected(posibleOptions.alertAndErrors)
                             }
                         >
-                            Alertas y usos
+                            Reportes y usos
                         </li>
                     </ul>
 
@@ -99,6 +111,13 @@ export const MachineDetails = (_) => {
                                     ? machine.item.totalHoursWorking
                                     : 0}
                             </span>
+                            <span
+                                className="reset_hours_working"
+                                onClick={() => resetHours(machine.item._id)}
+                            >
+                                <Loop />
+                                <span>Reiniciar horas</span>
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -108,10 +127,10 @@ export const MachineDetails = (_) => {
                         <MaitenancePartial machine={machine.item} />
                     )}
                     {selected === posibleOptions.spareParts && (
-                        <SparePartsPartial />
+                        <SparePartsPartial machine={machine.item} />
                     )}
                     {selected === posibleOptions.alertAndErrors && (
-                        <AlertAndUsesPartial />
+                        <AlertAndUsesPartial machine={machine.item} />
                     )}
                 </div>
             </div>
