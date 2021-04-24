@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./list.scss";
-import { Search } from "../../molecules";
+// import { Search } from "../../molecules";
 import {
     ArrowBackIos,
     ArrowForwardIos,
@@ -9,7 +9,9 @@ import {
     Apps,
     Visibility,
     Category,
+    PictureAsPdfOutlined,
 } from "@material-ui/icons";
+import { Dropdown } from "../../molecules";
 import { history } from "../../../helpers";
 
 const ListContainer = ({ children }) => {
@@ -38,6 +40,7 @@ const ListItems = ({
     visibility,
     rows,
     assignSparePart,
+    pdf,
 }) => {
     const [edit, setEdit] = useState("");
     const evalueEdit = (item) => {
@@ -105,6 +108,19 @@ const ListItems = ({
                                     <Visibility />
                                 </div>
                             )}
+                            {pdf && (
+                                <Dropdown Icon={PictureAsPdfOutlined} top={30} extraClass="item_edit_trigger status_item custom_dropdown">
+                                    {pdf.map((itemPDF, key) => (
+                                        <li
+                                            className="list_dropdown_item"
+                                            key={key}
+                                            onClick={() => itemPDF["action"](item)}
+                                        >
+                                            {itemPDF.title}
+                                        </li>
+                                    ))}
+                                </Dropdown>
+                            )}
                             {onDelete && (
                                 <div
                                     className="item_edit_trigger delete_item"
@@ -132,6 +148,8 @@ export const List = ({
     visibility,
     totalRows = 3,
     assignSparePart,
+    pdfOnItem,
+    pdf,
 }) => {
     const [itemsPerView, setItemsPerView] = useState(6);
     const [showItems, setShowItems] = useState([]);
@@ -174,18 +192,34 @@ export const List = ({
     return (
         <ListContainer>
             <div className="list_filters">
-                <Search />
-                <div className="pagination_list">
-                    {currentPage > 1 && (
-                        <ArrowBackIos
-                            onClick={() => changePage(currentPage - 1)}
-                        />
-                    )}
-                    <span>{currentPage + " - " + getTotalPages()}</span>
-                    {currentPage < getTotalPages() && (
-                        <ArrowForwardIos
-                            onClick={() => changePage(currentPage + 1)}
-                        />
+                {/* <Search /> */}
+                <div></div>
+                <div className="rows">
+                    <div className="pagination_list">
+                        {currentPage > 1 && (
+                            <ArrowBackIos
+                                onClick={() => changePage(currentPage - 1)}
+                            />
+                        )}
+                        <span>{currentPage + " - " + getTotalPages()}</span>
+                        {currentPage < getTotalPages() && (
+                            <ArrowForwardIos
+                                onClick={() => changePage(currentPage + 1)}
+                            />
+                        )}
+                    </div>
+                    {pdf && (
+                        <Dropdown Icon={PictureAsPdfOutlined} top={30} extraClass="custom_dropdown">
+                            {pdf.map((item, key) => (
+                                <li
+                                    className="list_dropdown_item"
+                                    key={key}
+                                    onClick={item["action"]}
+                                >
+                                    {item.title}
+                                </li>
+                            ))}
+                        </Dropdown>
                     )}
                 </div>
             </div>
@@ -198,6 +232,7 @@ export const List = ({
                     onDelete={onDelete}
                     details={details}
                     visibility={visibility}
+                    pdf={pdfOnItem}
                     rows={totalRows}
                     assignSparePart={assignSparePart}
                 />

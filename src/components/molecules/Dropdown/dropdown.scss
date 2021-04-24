@@ -6,6 +6,14 @@
     }
 }
 
+.custom_dropdown {
+    .dropdown {
+        box-shadow: none !important;
+        border: 1px solid #e0e0e0;
+        padding: 10px 0 !important;
+    }
+}
+
 .trigger_dropdown {
     display: flex;
     align-items: center;

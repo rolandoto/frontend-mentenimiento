@@ -16,6 +16,7 @@ export const Dropdown = ({
     logoutAction,
     circleRed,
     width,
+    top,
 }) => {
     const [isActive, setIsActive] = useState(false);
     const user = useSelector((state) => state.AuthReducer);
@@ -64,7 +65,10 @@ export const Dropdown = ({
                 </div>
             )}
 
-            <ul className="dropdown" style={{ width: width }}>
+            <ul
+                className="dropdown"
+                style={{ width: width, top: top ? top : null }}
+            >
                 {children}
                 {logoutAction && (
                     <>

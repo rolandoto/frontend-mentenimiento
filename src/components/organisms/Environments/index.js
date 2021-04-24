@@ -4,6 +4,7 @@ import { AddEnvironmentComponent } from "../../organisms/Modals";
 import { environmentActions, alertActions } from "../../../@actions";
 import { List } from "../";
 import { useDispatch } from "react-redux";
+import { PdfGenerator } from "../../../helpers";
 
 export const EnvironmentList = ({ environments = [] }) => {
     const dispatch = useDispatch();
@@ -27,6 +28,17 @@ export const EnvironmentList = ({ environments = [] }) => {
         }
     };
 
+    const exportEnvironments = (_) => {
+        const headers = [
+            "Nombre",
+            "Código del ambiente",
+            "Encargado",
+            "Fecha de creación",
+        ];
+        const keyItems = ["name", "environmentCode", "in_charge", "create_at"];
+        PdfGenerator(headers, keyItems, environments, "Listado de ambientes");
+    };
+
     return (
         <Container>
             <List
@@ -35,6 +47,12 @@ export const EnvironmentList = ({ environments = [] }) => {
                 EditComponent={AddEnvironmentComponent}
                 keys={keys}
                 onDelete={onDeleteHandle}
+                pdf={[
+                    {
+                        title: "Exportar ambientes",
+                        action: exportEnvironments,
+                    },
+                ]}
             />
         </Container>
     );

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "../../atoms";
-import { MachinesList , MachineTypeList} from "../../organisms";
+import { MachinesList, MachineTypeList } from "../../organisms";
 import { AddCircle } from "@material-ui/icons";
 import { modalActions } from "../../../@actions";
 import { useDispatch } from "react-redux";
 
-export const MachinesTemplate = ({ machines = [], machineTypes = [], environmnets = [] }) => {
+export const MachinesTemplate = ({
+    machines = [],
+    machineTypes = [],
+    environmnets = [],
+}) => {
     const dispatch = useDispatch();
 
     const [type, setType] = useState("machines");
@@ -61,7 +65,9 @@ export const MachinesTemplate = ({ machines = [], machineTypes = [], environmnet
             </div>
 
             {type === "machines" && <MachinesList machines={machines} />}
-            {type === "machineTypes" && <MachineTypeList machineTypes={machineTypes} />}
+            {type === "machineTypes" && (
+                <MachineTypeList machineTypes={machineTypes} />
+            )}
         </>
     );
 };

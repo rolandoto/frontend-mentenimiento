@@ -3,6 +3,8 @@ import { Container } from "../../../layouts";
 import { AddSparePartComponent } from "../../organisms/Modals";
 import { modalActions } from "../../../@actions";
 import { List } from "../";
+import { PdfGenerator } from "../../../helpers";
+
 import { useDispatch } from "react-redux";
 
 export const SparePartList = ({ spareParts = [] }) => {
@@ -28,7 +30,36 @@ export const SparePartList = ({ spareParts = [] }) => {
     // };
 
     const assignSparePart = (item) => {
-        dispatch(modalActions.showModalDetail("AddSparePartToMachine", item , "modal_size_small"));
+        dispatch(
+            modalActions.showModalDetail(
+                "AddSparePartToMachine",
+                item,
+                "modal_size_small"
+            )
+        );
+    };
+
+    const exportSpareParts = (_) => {
+        const headers = [
+            "Código del repuesto",
+            "Nombre",
+            "Precio",
+            "Stock",
+            "Fecha de creación",
+        ];
+        const keyItems = [
+            "sparePartCode",
+            "name",
+            "price",
+            "stock",
+            "create_at",
+        ];
+        PdfGenerator(
+            headers,
+            keyItems,
+            spareParts,
+            "Listado de repuestos"
+        );
     };
 
     return (
@@ -39,6 +70,12 @@ export const SparePartList = ({ spareParts = [] }) => {
                 EditComponent={AddSparePartComponent}
                 keys={keys}
                 assignSparePart={assignSparePart}
+                pdf={[
+                    {
+                        title: "Exportar respuestos",
+                        action: exportSpareParts,
+                    },
+                ]}
             />
         </Container>
     );

@@ -5,7 +5,6 @@ import {
     Home,
     SupervisorAccount,
     Build,
-    Folder,
     Category,
     Memory,
     Eco,
@@ -51,15 +50,6 @@ export const MainLayout = ({ children }) => {
                             path="/maintenances"
                             text="Mantenimeintos"
                             Icon={Build}
-                            organized
-                        />
-
-                        <div className="separator_top"></div>
-
-                        <Link
-                            path="/reports"
-                            text="Reportes"
-                            Icon={Folder}
                             organized
                         />
                     </Sidebar>
